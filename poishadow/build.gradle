@@ -14,6 +14,7 @@ dependencies {
 		// xmlBeans 2.6.0 contains duplicate classes which the Android build does not allow
 		//exclude group: 'org.apache.xmlbeans'
 	}
+    compile group: 'xerces', name: 'xercesImpl', version: '2.11.0'
 }
 
 /*task shadowJar(type: com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
