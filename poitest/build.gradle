@@ -41,10 +41,11 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:22.1.1'
-    compile('org.apache.poi:poi-ooxml:3.15-beta1') {
+    /*compile('org.apache.poi:poi-ooxml:3.15-beta1') {
 		// stax drags in javax-classes which are not allowed in Android
 		exclude group: 'stax'
 		// xmlBeans 2.6.0 contains duplicate classes which the Android build does not allow
 		exclude group: 'org.apache.xmlbeans'
-	}
+	}*/
+    compile files('../poishadow/build/libs/poishadow-all.jar')
 }
