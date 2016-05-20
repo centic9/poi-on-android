@@ -1,0 +1,10 @@
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/document_list"
+          android:name="org.dstadler.poiandroidtest.poitest.DocumentListFragment"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="16dp"
+          android:layout_marginRight="16dp"
+          tools:context=".DocumentListActivity"
+          tools:layout="@android:layout/list_content"/>
