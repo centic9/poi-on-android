@@ -1,5 +1,6 @@
 package org.dstadler.poiandroidtest.poitest.dummy;
 
+import android.content.Context;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -53,28 +54,6 @@ public class DummyContent {
         public DummyItem(String id, String content) {
             this.id = id;
             this.content = content;
-
-            try {
-                Workbook wb = new XSSFWorkbook();
-                Sheet sheet = wb.createSheet("Sheet1");
-                Row row = sheet.createRow(0);
-                Cell cell = row.createCell(0);
-                cell.setCellValue("testvalue");
-
-                OutputStream stream = new FileOutputStream("test.xlsx");
-                try {
-                    wb.write(stream);
-                } finally {
-                    stream.close();
-                }
-
-                wb.close();
-
-                wb = WorkbookFactory.create(new File("test.xlsx"));
-                wb.close();
-            } catch (Exception e) {
-                throw new IllegalStateException(e);
-            }
         }
 
         @Override

@@ -29,6 +29,9 @@ shadowJar {
     exclude 'META-INF/NOTICE'
     exclude 'META-INF/NOTICE.txt'
 
+    // unused dependencies
+    exclude(dependency('com.github.virtuald:curvesapi:1.03'))
+
     // Relocate javax dependencies so Android does not choke
-    relocate 'javax.xml', 'aavax.xml'
+    //relocate 'javax.xml', 'aavax.xml'
 }

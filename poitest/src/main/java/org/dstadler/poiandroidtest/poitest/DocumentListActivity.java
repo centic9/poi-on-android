@@ -1,8 +1,13 @@
 package org.dstadler.poiandroidtest.poitest;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.*;
 
 
 /**
@@ -34,6 +39,30 @@ public class DocumentListActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_document_list);
+
+
+        try {
+            Workbook wb = new XSSFWorkbook();
+            Sheet sheet = wb.createSheet("Sheet1");
+            Row row = sheet.createRow(0);
+            Cell cell = row.createCell(0);
+            cell.setCellValue("testvalue");
+
+            OutputStream stream = openFileOutput("test.xlsx", Context.MODE_PRIVATE);
+            try {
+                wb.write(stream);
+            } finally {
+                stream.close();
+            }
+
+            wb.close();
+
+            InputStream input = openFileInput("test.xlsx");
+            wb = WorkbookFactory.create(input);
+            wb.close();
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
 
         if (findViewById(R.id.document_detail_container) != null) {
             // The detail container view will be present only in the
