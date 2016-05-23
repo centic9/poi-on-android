@@ -5,16 +5,27 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven {
+        // CUTR Releases
+        url "https://github.com/CUTR-at-USF/cutr-mvn-repo/raw/master/releases"
+    }
 }
 
 dependencies {
     compile('org.apache.poi:poi-ooxml:3.15-beta1') {
 		// stax drags in javax-classes which are not allowed in Android
-		//exclude group: 'stax'
+		exclude group: 'stax'
 		// xmlBeans 2.6.0 contains duplicate classes which the Android build does not allow
 		//exclude group: 'org.apache.xmlbeans'
 	}
-    compile group: 'xerces', name: 'xercesImpl', version: '2.11.0'
+    //compile group: 'xerces', name: 'xercesImpl', version: '2.11.0'
+
+    // See http://stackoverflow.com/a/31139616/411846
+    // JSR173 APIs
+    compile 'edu.usf.cutr.android.xml:stax2-api-android:4.0.0'
+    compile 'edu.usf.cutr.android.xml:stax-api-android:1.0-2'
+    // JSR173 provider implementation - Aalto
+    compile 'edu.usf.cutr.android.xml:aalto-xml-android:0.9.11'
 }
 
 /*task shadowJar(type: com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
@@ -30,8 +41,14 @@ shadowJar {
     exclude 'META-INF/NOTICE.txt'
 
     // unused dependencies
-    exclude(dependency('com.github.virtuald:curvesapi:1.03'))
+    dependencies {
+		exclude(dependency('com.github.virtuald:curvesapi:1.03'))
+		//exclude(dependency('stax:stax-api:1.0.1'))
+	}
 
     // Relocate javax dependencies so Android does not choke
-    //relocate 'javax.xml', 'aavax.xml'
+    //relocate 'org.apache.xerces', 'prg.apache.xerces'
+    relocate 'javax.xml.namespace', 'edu.usf.cutr.javax.xml.namespace'
+    relocate 'javax.xml.stream', 'edu.usf.cutr.javax.xml.stream'
+    relocate 'javax.xml.XMLConstants', 'edu.usf.cutr.javax.xml.XMLConstants'
 }
