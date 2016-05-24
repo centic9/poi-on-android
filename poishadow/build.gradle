@@ -1,55 +1,60 @@
 plugins {
-  id 'java' // or 'groovy' Must be explicitly applied for shadow plugin
+  id 'java' // #java' plugin must be explicitly applied for shadow plugin
   id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
 repositories {
     mavenCentral()
-    /*maven {
-        // CUTR Releases
-        url "https://github.com/CUTR-at-USF/cutr-mvn-repo/raw/master/releases"
-    }*/
 }
 
 dependencies {
-    compile('org.apache.poi:poi-ooxml:3.15-beta1') {
-		// stax drags in javax-classes which are not allowed in Android
-		//exclude group: 'stax'
-		// xmlBeans 2.6.0 contains duplicate classes which the Android build does not allow
-		//exclude group: 'org.apache.xmlbeans'
-	}
-    //compile group: 'xerces', name: 'xercesImpl', version: '2.11.0'
-
-    // See http://stackoverflow.com/a/31139616/411846
-    // JSR173 APIs
-    //compile 'edu.usf.cutr.android.xml:stax2-api-android:4.0.0'
-    //compile 'edu.usf.cutr.android.xml:stax-api-android:1.0-2'
-    // JSR173 provider implementation - Aalto
-    //compile 'edu.usf.cutr.android.xml:aalto-xml-android:0.9.11'
-
-    compile group: 'com.fasterxml', name: 'aalto-xml', version: '1.0.0'
+    compile 'org.apache.poi:poi-ooxml:3.15-beta1'
+    compile 'com.fasterxml:aalto-xml:1.0.0'
 }
-
-/*task shadowJar(type: com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar) {
-    archiveName = "poi-shadow-3.15-beta1.jar"
-}*/
 
 shadowJar {
     // Filtering shadow jar contents by file pattern.
     exclude 'LICENSE.txt'
+    exclude 'NOTICE.txt'
     exclude 'META-INF/LICENSE'
     exclude 'META-INF/LICENSE.txt'
     exclude 'META-INF/NOTICE'
     exclude 'META-INF/NOTICE.txt'
+    exclude 'META-INF/maven/**'
 
-    // unused dependencies
+    // exclude stuff used for encryption, comment out these lines if you want to handle encrypted files
+    exclude 'org/etsi/uri/x01903/v13/**'
+    exclude 'org/w3/x2000/x09/xmldsig/**'
+
+    // exclude some unused stuff from the alto xml project
+    exclude 'com/fasterxml/aalto/async/**'
+    exclude 'com/fasterxml/aalto/Async*'
+    exclude 'com/fasterxml/aalto/dom/**'
+
+    // exclude stuff from the POI itself which are not used currently to make the jar-file
+    // as small as possible, adjust these to suite your use-case!
+    exclude 'com/microsoft/**'
+    exclude 'org/apache/poi/dev/**'
+    exclude 'org/apache/poi/extractor/**'
+    exclude 'org/apache/poi/hpsf/**'
+    exclude 'org/apache/poi/hssf/**'
+    exclude 'org/apache/poi/sl/**'
+    exclude 'org/apache/poi/wp/**'
+    exclude 'org/apache/poi/xdgf/**'
+    exclude 'org/apache/poi/xslf/**'
+    exclude 'org/apache/poi/xwpf/**'
+    exclude 'org/openxmlformats/schemas/drawingml/**'
+    exclude 'org/openxmlformats/schemas/presentationml/**'
+    exclude 'org/openxmlformats/schemas/wordprocessingml/**'
+    exclude 'org/apache/xmlbeans/impl/xb/'
+
+    // usually this is not needed, remove it if you would like to use Visio support
     dependencies {
-		exclude(dependency('com.github.virtuald:curvesapi:1.03'))
-		//exclude(dependency('stax:stax-api:1.0.1'))
+		exclude(dependency('com.github.virtuald:curvesapi'))
+		exclude(dependency('commons-codec:commons-codec'))
 	}
 
     // Relocate javax dependencies so Android does not choke
-    //relocate 'org.apache.xerces', 'prg.apache.xerces'
     relocate 'javax.xml.namespace', 'org.apache.poi.javax.xml.namespace'
     relocate 'javax.xml.stream', 'org.apache.poi.javax.xml.stream'
     relocate 'javax.xml.XMLConstants', 'org.apache.poi.javax.xml.XMLConstants'
