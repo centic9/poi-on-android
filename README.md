@@ -30,7 +30,9 @@ It consists of two projects:
 
 #### Todo
 * Add more actual functionality to the sample application,
-  currently it just
+  currently it just creates a new spreadsheet, adds some data
+  then stores it in the Application storage area and reads it
+  again from there.
 
 #### Links
 
