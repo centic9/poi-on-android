@@ -14,6 +14,12 @@ It consists of two projects:
   Apache POI. See `DocumentListActivity` for the actual
   code
 
+#### Getting started
+
+    git clone git://github.com/centic9/poi-on-android
+    cd poi-on-android
+    ./gradlew build connectedCheck
+
 #### Notes
 
 * This was only tested in Android Studio with the Android
