@@ -36,6 +36,12 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
     }
+
+    lintOptions {
+        // There are restricted packages used in some of POI code, e.g. java.awt or javax.imageio
+        // I could not exclude these in the
+        abortOnError false
+    }
 }
 
 dependencies {
