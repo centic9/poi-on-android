@@ -59,3 +59,5 @@ shadowJar {
     relocate 'javax.xml.stream', 'org.apache.poi.javax.xml.stream'
     relocate 'javax.xml.XMLConstants', 'org.apache.poi.javax.xml.XMLConstants'
 }
+
+assemble.dependsOn shadowJar
