@@ -1,4 +1,9 @@
 # see https://docs.travis-ci.com/user/languages/android
+
+# interesting other projects:
+# * https://github.com/pestrada/android-tdd-playground/blob/master/.travis.yml
+# * https://github.com/andrewhr/rxjava-android-example/blob/master/.travis.yml
+
 language: android
 jdk: oraclejdk7
 
