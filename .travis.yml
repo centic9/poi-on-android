@@ -1,5 +1,6 @@
 # see https://docs.travis-ci.com/user/languages/android
 language: android
+jdk: oraclejdk7
 
 android:
   components:
@@ -24,3 +25,15 @@ android:
     # if you need to run emulator(s) during your tests
     #- sys-img-armeabi-v7a-android-19
     #- sys-img-x86-android-17
+
+before_script:
+  # check if simply not pointing to the SDK makes it work on Travis
+  - rm local.properties
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
