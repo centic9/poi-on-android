@@ -8,6 +8,9 @@
 
 language: android
 jdk: oraclejdk7
+env:
+  matrix:
+    - ANDROID_TARGET=android-18  ANDROID_ABI=armeabi-v7a
 
 android:
   components:
