@@ -39,6 +39,11 @@ android:
 before_script:
   # check if simply not pointing to the SDK makes it work on Travis
   - rm local.properties
+  # Create and start emulator
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - adb wait-for-device
+  - adb shell input keyevent 82 &
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
