@@ -1,8 +1,10 @@
 # see https://docs.travis-ci.com/user/languages/android
 
-# interesting other projects:
+# interesting other projects/resources:
 # * https://github.com/pestrada/android-tdd-playground/blob/master/.travis.yml
 # * https://github.com/andrewhr/rxjava-android-example/blob/master/.travis.yml
+# * https://github.com/Ruenzuo/android-cd-travis-example/blob/master/.travis.yml
+# * http://stackoverflow.com/a/27844077/411846
 
 language: android
 jdk: oraclejdk7
@@ -23,13 +25,16 @@ android:
     # Additional components
     #- extra-google-google_play_services
     #- extra-google-m2repository
-    #- extra-android-m2repository
+    - extra-android-m2repository
     #- addon-google_apis-google-19
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
     #- sys-img-armeabi-v7a-android-19
     #- sys-img-x86-android-17
+
+  licenses:
+    - android-sdk-license-.+
 
 before_script:
   # check if simply not pointing to the SDK makes it work on Travis
