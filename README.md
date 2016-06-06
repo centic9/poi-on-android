@@ -22,6 +22,9 @@ It consists of two projects:
 
 #### Notes
 
+* You can use the resulting jar-file `poishadow/build/libs/poishadow-all.jar`
+  in your own project, the code in directory `poitest` is
+  just a small sample Android application to show that it works.
 * This was only tested in Android Studio with the Android
   emulator until now, should work on real Android as well, though!
 * Tested with `targetSdkVersion 22` and `minSdkVersion 15`,
