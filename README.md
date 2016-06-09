@@ -14,10 +14,33 @@ It consists of two projects:
   Apache POI. See `DocumentListActivity` for the actual
   code
 
+#### Preparation
+
+You will need the following pieces in order to get started
+
+* A recent Java SDK, preferably Java 8
+* An installation of the Android SDK, either the one included 
+  with Android Studio or a separate download, see 
+  https://developer.android.com/studio/index.html#downloads
+
 #### Getting started
+
+Get the code:
 
     git clone git://github.com/centic9/poi-on-android
     cd poi-on-android
+    
+Configure where your Android SDK resides:
+
+    vi local.properties   
+
+Configure the version of the Android Build Tools that you have installed, 
+as of this writing, build-tools "24 rc4" is the latest version.
+
+    vi poitest/build.gradle
+    
+Finally run the build and some testing. For only the jar-files run just `build`
+
     ./gradlew build connectedCheck
 
 #### Notes
