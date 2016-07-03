@@ -31,8 +31,9 @@ shadowJar {
     exclude 'com/fasterxml/aalto/Async*'
     exclude 'com/fasterxml/aalto/dom/**'
 
-    // exclude stuff from the POI itself which are not used currently to make the jar-file
-    // as small as possible, adjust these to suite your use-case!
+    // exclude stuff from Apache POI which are not used currently
+    // This makes the jar-file a bit smaller, you can adjust these
+    // to suite your use-case!
     exclude 'com/microsoft/**'
     exclude 'org/apache/poi/dev/**'
     exclude 'org/apache/poi/extractor/**'
@@ -48,7 +49,7 @@ shadowJar {
     exclude 'org/openxmlformats/schemas/wordprocessingml/**'
     exclude 'org/apache/xmlbeans/impl/xb/'
 
-    // usually this is not needed, remove it if you would like to use Visio support
+    // these are only needed when handling Visio files, remove it if you would like to use Visio support
     dependencies {
 		exclude(dependency('com.github.virtuald:curvesapi'))
 		exclude(dependency('commons-codec:commons-codec'))
