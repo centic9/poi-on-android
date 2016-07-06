@@ -14,7 +14,23 @@ It consists of two projects:
   Apache POI. See `DocumentListActivity` for the actual
   code
 
-#### Preparation
+#### Getting started
+
+##### Use a pre-built jar
+
+If you want to get started quickly, there is a ready-made jar-file available in the 
+[release section](https://github.com/centic9/poi-on-android/releases). 
+
+You should be able to simply add this to your Android project and use the Apache POI
+classes from it.
+
+##### Build the jar yourself
+
+If you would like to change how the jar-file is built, e.g. if you need classes that 
+are excluded, use a different version of POI or would like to adjust the build in some 
+other way, you can build the shaded jar with the following steps:
+
+Preparation:
 
 You will need the following pieces in order to get started
 
@@ -22,8 +38,6 @@ You will need the following pieces in order to get started
 * An installation of the Android SDK, either the one included 
   with Android Studio or a separate download, see 
   https://developer.android.com/studio/index.html#downloads
-
-#### Getting started
 
 Get the code:
 
