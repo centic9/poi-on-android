@@ -69,6 +69,7 @@ Finally run the build and some testing. For only the jar-files run just `build`
   `multiDexEnabled true`
 
 #### Todo
+
 * Add more actual functionality to the sample application,
   currently it just creates a new spreadsheet, adds some data
   then stores it in the Application storage area and reads it
