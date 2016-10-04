@@ -7,7 +7,7 @@
 # * http://stackoverflow.com/a/27844077/411846
 
 language: android
-jdk: oraclejdk7
+jdk: oraclejdk8
 env:
   matrix:
     - ANDROID_TARGET=android-18  ANDROID_ABI=armeabi-v7a
