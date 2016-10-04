@@ -39,6 +39,9 @@ android:
   licenses:
     - android-sdk-license-.+
 
+before_install:
+ - chmod +x gradlew
+
 before_script:
   # check if simply not pointing to the SDK makes it work on Travis
   - rm local.properties
