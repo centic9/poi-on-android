@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.poi:poi-ooxml:3.15-beta2'
+    compile 'org.apache.poi:poi-ooxml:3.15'
     compile 'com.fasterxml:aalto-xml:1.0.0'
 }
 
@@ -38,7 +38,6 @@ shadowJar {
     exclude 'org/apache/poi/dev/**'
     exclude 'org/apache/poi/extractor/**'
     exclude 'org/apache/poi/hpsf/**'
-    exclude 'org/apache/poi/hssf/**'
     exclude 'org/apache/poi/sl/**'
     exclude 'org/apache/poi/wp/**'
     exclude 'org/apache/poi/xdgf/**'
