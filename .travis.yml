@@ -1,60 +1,17 @@
-# see https://docs.travis-ci.com/user/languages/android
-
-# interesting other projects/resources:
-# * https://github.com/pestrada/android-tdd-playground/blob/master/.travis.yml
-# * https://github.com/andrewhr/rxjava-android-example/blob/master/.travis.yml
-# * https://github.com/Ruenzuo/android-cd-travis-example/blob/master/.travis.yml
-# * http://stackoverflow.com/a/27844077/411846
-
 language: android
 jdk: oraclejdk8
-env:
-  matrix:
-    - ANDROID_TARGET=android-18  ANDROID_ABI=armeabi-v7a
-
-android:
-  components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    # - platform-tools
-    # - tools
-
-    # The BuildTools version used by your project
-    - build-tools-25.0.2
-
-    # The SDK version used to compile your project
-    - android-25
-
-    # Additional components
-    #- extra-google-google_play_services
-    #- extra-google-m2repository
-    - extra-android-m2repository
-    #- addon-google_apis-google-19
-
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    #- sys-img-armeabi-v7a-android-19
-    #- sys-img-x86-android-17
-
-  licenses:
-    - android-sdk-license-.+
-
-before_install:
- - chmod +x gradlew
-
-before_script:
-  # check if simply not pointing to the SDK makes it work on Travis
-  - rm local.properties
-  # Create and start emulator
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - adb wait-for-device
-  - adb shell input keyevent 82 &
-
 before_cache:
-  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+android:
+  components:
+    - build-tools-25.0.2
+    - android-25
+    - extra-android-m2repository
+before_install: chmod +x gradlew
+script: ./gradlew build
