@@ -1,13 +1,19 @@
 package org.dstadler.poiandroidtest.poitest;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
-import org.apache.poi.ss.usermodel.*;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.*;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 
 /**
@@ -26,8 +32,7 @@ import java.io.*;
  * {@link DocumentListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class DocumentListActivity extends Activity
-        implements DocumentListFragment.Callbacks {
+public class DocumentListActivity extends Activity implements DocumentListFragment.Callbacks {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet

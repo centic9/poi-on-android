@@ -1,11 +1,12 @@
 package org.dstadler.poiandroidtest.poitest;
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 
 /**
@@ -25,13 +26,6 @@ public class DocumentDetailFragment extends Fragment {
      * The dummy content this fragment is presenting.
      */
     private DummyContent.DummyItem mItem;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public DocumentDetailFragment() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
