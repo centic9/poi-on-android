@@ -13,48 +13,6 @@ dependencies {
 }
 
 shadowJar {
-    // Filtering shadow jar contents by file pattern.
-    exclude 'LICENSE.txt'
-    exclude 'NOTICE.txt'
-    exclude 'META-INF/LICENSE'
-    exclude 'META-INF/LICENSE.txt'
-    exclude 'META-INF/NOTICE'
-    exclude 'META-INF/NOTICE.txt'
-    exclude 'META-INF/maven/**'
-
-    // exclude stuff used for encryption, comment out these lines if you want to handle encrypted files
-    exclude 'org/etsi/uri/x01903/v13/**'
-    exclude 'org/w3/x2000/x09/xmldsig/**'
-
-    // exclude some unused stuff from the alto xml project
-    exclude 'com/fasterxml/aalto/async/**'
-    exclude 'com/fasterxml/aalto/Async*'
-    exclude 'com/fasterxml/aalto/dom/**'
-
-    // exclude stuff from Apache POI which are not used currently
-    // This makes the jar-file a bit smaller, you can adjust these
-    // to suite your use-case!
-    exclude 'com/microsoft/**'
-    exclude 'org/apache/poi/dev/**'
-    exclude 'org/apache/poi/extractor/**'
-    exclude 'org/apache/poi/hpsf/**'
-    exclude 'org/apache/poi/sl/**'
-    exclude 'org/apache/poi/wp/**'
-    exclude 'org/apache/poi/xdgf/**'
-    exclude 'org/apache/poi/xslf/**'
-    exclude 'org/apache/poi/xwpf/**'
-    exclude 'org/openxmlformats/schemas/drawingml/**'
-    exclude 'org/openxmlformats/schemas/presentationml/**'
-    exclude 'org/openxmlformats/schemas/wordprocessingml/**'
-    exclude 'org/apache/xmlbeans/impl/xb/'
-
-    // these are only needed when handling Visio files, remove it if you would like to use Visio support
-    dependencies {
-		exclude(dependency('com.github.virtuald:curvesapi'))
-		exclude(dependency('commons-codec:commons-codec'))
-	}
-
-    // Relocate javax dependencies so Android does not choke
     relocate 'javax.xml.namespace', 'org.apache.poi.javax.xml.namespace'
     relocate 'javax.xml.stream', 'org.apache.poi.javax.xml.stream'
     relocate 'javax.xml.XMLConstants', 'org.apache.poi.javax.xml.XMLConstants'
