@@ -36,6 +36,6 @@ android {
 
 dependencies {
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.android.support:support-v4:25.2.0'
     compile files('../poishadow/build/libs/poishadow-all.jar')
 }
