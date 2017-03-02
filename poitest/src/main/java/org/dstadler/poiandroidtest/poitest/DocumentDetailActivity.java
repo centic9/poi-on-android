@@ -2,8 +2,8 @@ package org.dstadler.poiandroidtest.poitest;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-
 import android.view.MenuItem;
 
 /**
@@ -58,7 +58,9 @@ public class DocumentDetailActivity extends Activity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            navigateUpTo(new Intent(this, DocumentListActivity.class));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                navigateUpTo(new Intent(this, DocumentListActivity.class));
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
