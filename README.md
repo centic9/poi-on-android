@@ -26,8 +26,8 @@ classes from it.
 
 ##### Build the jar yourself
 
-If you would like to change how the jar-file is built, e.g. if you need classes that 
-are excluded, use a different version of POI or would like to adjust the build in some 
+If you would like to change how the jar-file is built, e.g. if you need classes that
+are excluded, use a different version of POI or would like to adjust the build in some
 other way, you can build the shaded jar with the following steps:
 
 Preparation:
@@ -35,24 +35,24 @@ Preparation:
 You will need the following pieces in order to get started
 
 * A recent Java SDK, preferably Java 8
-* An installation of the Android SDK, either the one included 
-  with Android Studio or a separate download, see 
+* An installation of the Android SDK, either the one included
+  with Android Studio or a separate download, see
   https://developer.android.com/studio/index.html#downloads
 
 Get the code:
 
     git clone git://github.com/centic9/poi-on-android
     cd poi-on-android
-    
+
 Configure where your Android SDK resides:
 
-    vi local.properties   
+    vi local.properties
 
-Configure the version of the Android Build Tools that you have installed, 
+Configure the version of the Android Build Tools that you have installed,
 as of this writing, build-tools "24 rc4" is the latest version.
 
     vi poitest/build.gradle
-    
+
 Finally run the build and some testing. For only the jar-files run just `build`
 
     ./gradlew build connectedCheck
