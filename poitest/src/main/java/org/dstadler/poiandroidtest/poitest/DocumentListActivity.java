@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 
 import java.io.*;
+import java.util.Map;
 
 
 /**
@@ -50,7 +52,11 @@ public class DocumentListActivity extends Activity
             Sheet sheet = wb.createSheet("Sheet1");
             Row row = sheet.createRow(0);
             Cell cell = row.createCell(0);
-            cell.setCellValue("testvalue");
+            cell.setCellValue("cell-1");
+            cell = row.createCell(1);
+            cell.setCellValue("cell-2");
+            cell = row.createCell(2);
+            cell.setCellValue("cell-3");
 
             OutputStream stream = openFileOutput("test.xlsx", Context.MODE_PRIVATE);
             try {
@@ -63,6 +69,16 @@ public class DocumentListActivity extends Activity
 
             InputStream input = openFileInput("test.xlsx");
             wb = WorkbookFactory.create(input);
+
+            // replace the dummy-content to show that we could write and read the cell-values
+            int i = 0;
+            row = wb.getSheetAt(0).getRow(0);
+            for (Map.Entry<String, DummyContent.DummyItem> entry : DummyContent.ITEM_MAP.entrySet()) {
+                entry.getValue().content = row.getCell(i).getStringCellValue();
+
+                i++;
+            }
+
             wb.close();
         } catch (Exception e) {
             throw new IllegalStateException(e);
