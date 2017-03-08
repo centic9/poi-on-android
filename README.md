@@ -48,14 +48,15 @@ Configure where your Android SDK resides:
 
     echo "sdk.dir=/opt/android-sdk-linux" > local.properties
 
-Configure the version of the Android Build Tools that you have installed,
-as of this writing, build-tools "24 rc4" is the latest version.
+Configure the version of the Android Build Tools that you have installed.
 
     vi poitest/build.gradle
 
-Finally run the build and some testing. For only the jar-files run just `build`
+Finally run the build and some testing. Make sure you have a device connected, e.g. the Android emulator.
 
     ./gradlew build connectedCheck
+
+For only the jar-files run just `build`
 
 #### Notes
 
@@ -64,7 +65,7 @@ Finally run the build and some testing. For only the jar-files run just `build`
   just a small sample Android application to show that it works.
 * This was only tested in Android Studio with the Android
   emulator until now, should work on real Android as well, though!
-* Tested with `targetSdkVersion 22` and `minSdkVersion 15`,
+* Tested with `targetSdkVersion 25` and `minSdkVersion 15`,
   although other versions should work as long as they support
   `multiDexEnabled true`
 
@@ -88,7 +89,7 @@ Finally run the build and some testing. For only the jar-files run just `build`
 
 #### Licensing
 
-   Copyright 2015-2016 Dominik Stadler
+   Copyright 2015-2017 Dominik Stadler
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
