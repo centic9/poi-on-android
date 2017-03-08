@@ -16,14 +16,16 @@ android:
   components:
     # Uncomment the lines below if you want to
     # use the latest revision of Android SDK Tools
-    # - platform-tools
-    # - tools
+    - platform-tools
+    # https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943
+    - tools
+    - tools
 
     # The BuildTools version used by your project
-    - build-tools-22.0.1
+    - build-tools-25.0.2
 
     # The SDK version used to compile your project
-    - android-22
+    - android-25
 
     # Additional components
     #- extra-google-google_play_services
@@ -53,8 +55,10 @@ before_script:
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+script: ./gradlew build
