@@ -46,7 +46,7 @@ Get the code:
 
 Configure where your Android SDK resides:
 
-    vi local.properties
+    echo "sdk.dir=/opt/android-sdk-linux" > local.properties
 
 Configure the version of the Android Build Tools that you have installed,
 as of this writing, build-tools "24 rc4" is the latest version.
