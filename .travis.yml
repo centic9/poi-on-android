@@ -59,4 +59,4 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
-script: ./gradlew build
+script: ./gradlew build connectedCheck
