@@ -36,11 +36,6 @@ shadowJar {
     exclude 'META-INF/NOTICE.txt'
     exclude 'META-INF/maven/**'
 
-    // exclude some unused stuff from the alto xml project
-    exclude 'com/fasterxml/aalto/async/**'
-    exclude 'com/fasterxml/aalto/Async*'
-    exclude 'com/fasterxml/aalto/dom/**'
-
     // these are only needed when handling Visio files, remove it if you would like to use Visio support
     dependencies {
         exclude(dependency('com.github.virtuald:curvesapi'))
