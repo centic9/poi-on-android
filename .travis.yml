@@ -54,9 +54,11 @@ before_script:
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
-script: ./gradlew build && sleep 5 && ./gradlew connectedCheck
+
+script: ./gradlew :poishadow:shadowJar && sleep 5 && ./gradlew build && sleep 5 && ./gradlew connectedCheck
