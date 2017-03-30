@@ -58,6 +58,20 @@ Finally run the build and some testing. Make sure you have a device connected, e
 
 For only the jar-files run just `build`
 
+#### Run the Android emulator
+
+List available emulators
+
+    <android-sdk>/tools/emulator -list-avds
+
+Start an Android emulator
+
+    <android-sdk>/tools/emulator -avd <name>
+
+Install the apk
+
+    <android-sdk>/platform-tools/adb install ./poitest/build/outputs/apk/poitest-debug.apk
+
 #### Notes
 
 * You can use the resulting jar-file `poishadow/build/libs/poishadow-all.jar`
