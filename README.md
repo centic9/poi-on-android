@@ -52,6 +52,14 @@ Configure the version of the Android Build Tools that you have installed.
 
     vi poitest/build.gradle
 
+In order to work around problems with finding a suitable XML Parser, currently
+the following system properties need to be set manually during startup of your
+application (let me know if you know of a better way to do this, see issue #10)
+
+    System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl");
+    System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
+    System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
+
 Finally run the build and some testing. Make sure you have a device connected, e.g. the Android emulator.
 
     ./gradlew build connectedCheck
