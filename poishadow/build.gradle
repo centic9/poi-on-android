@@ -48,4 +48,5 @@ shadowJar {
     relocate 'javax.xml.XMLConstants', 'org.apache.poi.javax.xml.XMLConstants'
 }
 
-assemble.dependsOn shadowJar
+jar.dependsOn shadowJar
+test.dependsOn shadowJar
