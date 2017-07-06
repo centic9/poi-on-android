@@ -4,11 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import org.apache.poi.ss.usermodel.*;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 
-import java.io.*;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Map;
 
 
@@ -57,6 +65,11 @@ public class DocumentListActivity extends Activity
             cell.setCellValue("cell-2");
             cell = row.createCell(2);
             cell.setCellValue("cell-3");
+
+            XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
+            style.setFillBackgroundColor(new XSSFColor(new org.apache.poi.java.awt.Color(1, 2, 3)));
+
+            cell.setCellStyle(style);
 
             OutputStream stream = openFileOutput("test.xlsx", Context.MODE_PRIVATE);
             try {
