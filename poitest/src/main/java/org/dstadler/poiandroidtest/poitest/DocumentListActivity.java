@@ -36,6 +36,7 @@ import java.util.Map;
  * {@link DocumentListFragment.Callbacks} interface
  * to listen for item selections.
  */
+@SuppressWarnings("TryFinallyCanBeTryWithResources")
 public class DocumentListActivity extends Activity
         implements DocumentListFragment.Callbacks {
 
@@ -93,6 +94,27 @@ public class DocumentListActivity extends Activity
             }
 
             wb.close();
+
+            InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum);
+            try {
+                /* Reading the Doc fails with
+
+                 Caused by: org.apache.xmlbeans.SchemaTypeLoaderException: Cannot resolve type for handle _XY_Q=space|R=space@http://www.w3.org/XML/1998/namespace (schemaorg_apache_xmlbeans.system.sF1327CCA741569E70F9CA8C9AF9B44B2.cttext7f5btype) - code 13
+                                                                                         at org.apache.xmlbeans.impl.schema.SchemaTypeSystemImpl$XsbReader.readHandle(SchemaTypeSystemImpl.java:2025)
+
+                XWPFDocument doc = new XWPFDocument(docFile);
+                try {
+                    for(XWPFParagraph paragraph : doc.getParagraphs()) {
+                        DummyContent.addItem(new DummyContent.DummyItem(Integer.toString(i), StringUtils.abbreviate(paragraph.getText(), 10)));
+                        i++;
+                    }
+                } finally {
+                    doc.close();
+                }*/
+
+            } finally {
+                docFile.close();
+            }
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
