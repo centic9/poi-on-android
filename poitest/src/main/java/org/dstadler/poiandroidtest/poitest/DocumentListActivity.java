@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -13,6 +14,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 
 import java.io.InputStream;
@@ -97,11 +100,6 @@ public class DocumentListActivity extends Activity
 
             InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum);
             try {
-                /* Reading the Doc fails with
-
-                 Caused by: org.apache.xmlbeans.SchemaTypeLoaderException: Cannot resolve type for handle _XY_Q=space|R=space@http://www.w3.org/XML/1998/namespace (schemaorg_apache_xmlbeans.system.sF1327CCA741569E70F9CA8C9AF9B44B2.cttext7f5btype) - code 13
-                                                                                         at org.apache.xmlbeans.impl.schema.SchemaTypeSystemImpl$XsbReader.readHandle(SchemaTypeSystemImpl.java:2025)
-
                 XWPFDocument doc = new XWPFDocument(docFile);
                 try {
                     for(XWPFParagraph paragraph : doc.getParagraphs()) {
@@ -110,8 +108,7 @@ public class DocumentListActivity extends Activity
                     }
                 } finally {
                     doc.close();
-                }*/
-
+                }
             } finally {
                 docFile.close();
             }

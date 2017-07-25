@@ -15,19 +15,6 @@ dependencies {
 }
 
 shadowJar {
-    // Filtering shadow jar contents by file pattern.
-    exclude 'schemaorg_apache_xmlbeans/attribute/**'
-    exclude 'schemaorg_apache_xmlbeans/attributegroup/**'
-    exclude 'schemaorg_apache_xmlbeans/element/**'
-    exclude 'schemaorg_apache_xmlbeans/identityconstraint/**'
-    exclude 'schemaorg_apache_xmlbeans/javaname/**'
-    exclude 'schemaorg_apache_xmlbeans/modelgroup/**'
-    exclude 'schemaorg_apache_xmlbeans/namespace/**'
-    exclude 'schemaorg_apache_xmlbeans/src/**'
-    exclude 'schemaorg_apache_xmlbeans/system/sXML*/**'
-    exclude 'schemaorg_apache_xmlbeans/system/s8C3F193EE11A2F798ACF65489B9E6078/**'
-    exclude 'schemaorg_apache_xmlbeans/type/**'
-
     exclude 'repackage/**'
 
     exclude 'LICENSE.txt'
