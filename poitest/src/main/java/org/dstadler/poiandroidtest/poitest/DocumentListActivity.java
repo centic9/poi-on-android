@@ -87,6 +87,9 @@ public class DocumentListActivity extends Activity
             InputStream input = openFileInput("test.xlsx");
             wb = WorkbookFactory.create(input);
 
+            // refresh the content as we re-enter here if the user navigates back from the detail view
+            DummyContent.initialize();
+
             // replace the dummy-content to show that we could write and read the cell-values
             int i = 0;
             row = wb.getSheetAt(0).getRow(0);
@@ -103,7 +106,7 @@ public class DocumentListActivity extends Activity
                 XWPFDocument doc = new XWPFDocument(docFile);
                 try {
                     for(XWPFParagraph paragraph : doc.getParagraphs()) {
-                        DummyContent.addItem(new DummyContent.DummyItem(Integer.toString(i), StringUtils.abbreviate(paragraph.getText(), 10)));
+                        DummyContent.addItem(new DummyContent.DummyItem(Integer.toString(i), StringUtils.abbreviate(paragraph.getText(), 20), paragraph.getText()));
                         i++;
                     }
                 } finally {
