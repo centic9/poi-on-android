@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -18,8 +19,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Map;
 
 
@@ -101,7 +101,7 @@ public class DocumentListActivity extends Activity
 
             wb.close();
 
-            InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum);
+            /*InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum);
             try {
                 XWPFDocument doc = new XWPFDocument(docFile);
                 try {
@@ -114,6 +114,15 @@ public class DocumentListActivity extends Activity
                 }
             } finally {
                 docFile.close();
+            }*/
+
+            InputStream inp = getResources().openRawResource(R.raw.workbook);
+
+            try {
+                wb = WorkbookFactory.create(inp);
+                Log.i("TAG", "onCreate: Opened workbook.xls");
+            } finally {
+                inp.close();
             }
         } catch (Exception e) {
             throw new IllegalStateException(e);
