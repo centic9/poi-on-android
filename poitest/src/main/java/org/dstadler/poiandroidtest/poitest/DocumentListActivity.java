@@ -145,6 +145,8 @@ public class DocumentListActivity extends Activity
 
             cell.setCellStyle(style);
 
+            sheet.setPrintGridlines(true);
+
             OutputStream stream = openFileOutput("test.xlsx", Context.MODE_PRIVATE);
             try {
                 wb.write(stream);
