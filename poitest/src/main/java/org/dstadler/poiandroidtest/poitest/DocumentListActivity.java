@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -60,41 +62,26 @@ public class DocumentListActivity extends Activity
         System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
 
         try {
-            Workbook wb = new XSSFWorkbook();
-            Sheet sheet = wb.createSheet("Sheet1");
-            Row row = sheet.createRow(0);
-            Cell cell = row.createCell(0);
-            cell.setCellValue("cell-1");
-            cell = row.createCell(1);
-            cell.setCellValue("cell-2");
-            cell = row.createCell(2);
-            cell.setCellValue("cell-3");
-
-            XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
-            style.setFillBackgroundColor(new XSSFColor(new org.apache.poi.java.awt.Color(1, 2, 3)));
-
-            cell.setCellStyle(style);
-
-            OutputStream stream = openFileOutput("test.xlsx", Context.MODE_PRIVATE);
-            try {
-                wb.write(stream);
-            } finally {
-                stream.close();
-            }
-
-            wb.close();
+            writeWorkbook();
 
             InputStream input = openFileInput("test.xlsx");
-            wb = WorkbookFactory.create(input);
+            Workbook wb = WorkbookFactory.create(input);
 
             // refresh the content as we re-enter here if the user navigates back from the detail view
             DummyContent.initialize();
 
             // replace the dummy-content to show that we could write and read the cell-values
             int i = 0;
-            row = wb.getSheetAt(0).getRow(0);
+            Row row = wb.getSheetAt(0).getRow(0);
             for (Map.Entry<String, DummyContent.DummyItem> entry : DummyContent.ITEM_MAP.entrySet()) {
-                entry.getValue().content = row.getCell(i).getStringCellValue();
+                Cell cell = row.getCell(i);
+                entry.getValue().content = cell.getStringCellValue();
+
+                // read hyperlink back in and add it to the displayed text
+                Hyperlink hyperlink = cell.getHyperlink();
+                if(hyperlink != null) {
+                    entry.getValue().content += " - " + hyperlink.getAddress();
+                }
 
                 i++;
             }
@@ -134,6 +121,39 @@ public class DocumentListActivity extends Activity
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
+    }
+
+    private void writeWorkbook() throws java.io.IOException {
+        Workbook wb = new XSSFWorkbook();
+        try {
+            Sheet sheet = wb.createSheet("Sheet1");
+            Row row = sheet.createRow(0);
+            Cell cell = row.createCell(0);
+            cell.setCellValue("cell-1");
+            cell = row.createCell(1);
+            cell.setCellValue("cell-2");
+            cell = row.createCell(2);
+            cell.setCellValue("cell-3");
+
+            XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
+            style.setFillBackgroundColor(new XSSFColor(new org.apache.poi.java.awt.Color(1, 2, 3)));
+
+            Hyperlink link = wb.getCreationHelper().createHyperlink(HyperlinkType.URL);
+            link.setAddress("http://www.google.at");
+            link.setLabel("Google");
+            cell.setHyperlink(link);
+
+            cell.setCellStyle(style);
+
+            OutputStream stream = openFileOutput("test.xlsx", Context.MODE_PRIVATE);
+            try {
+                wb.write(stream);
+            } finally {
+                stream.close();
+            }
+        } finally {
+            wb.close();
+        }
     }
 
     /**
