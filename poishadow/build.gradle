@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.poi:poi-ooxml:3.17-beta1'
+    compile 'org.apache.poi:poi-ooxml:3.17'
     compile 'com.fasterxml:aalto-xml:1.0.0'
 }
 
