@@ -10,7 +10,7 @@ language: android
 jdk: oraclejdk8
 env:
   matrix:
-    - ANDROID_TARGET=android-25  ANDROID_ABI=google_apis/armeabi-v7a
+    - ANDROID_TARGET=android-25  ANDROID_ABI=google_apis/armeabi-v7a QEMU_AUDIO_DRV=none 
 
 android:
   components:
@@ -49,7 +49,7 @@ before_script:
   # Create and start emulator
   - android list targets
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-  - emulator -avd test -no-skin -no-audio -no-window &
+  - emulator -avd test -no-skin -no-window &
   - adb wait-for-device
   - adb shell input keyevent 82 &
 
