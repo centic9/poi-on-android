@@ -21,6 +21,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyItemWithCode;
+import org.dstadler.poiandroidtest.poitest.test.TestIssue28;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -104,6 +105,14 @@ public class DocumentListActivity extends Activity
                     TestSignatureInfo test = new TestSignatureInfo();
                     test.testConstruct();
                     return "Signature Info constructed successfully";
+                }
+            }));
+
+            DummyContent.addItem(new DummyItemWithCode("c3", "Test Issue 28", new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    TestIssue28.saveExcelFile(openFileOutput("issue28.xlsx", Context.MODE_PRIVATE));
+                    return "Issue 28 tested successfully";
                 }
             }));
 
