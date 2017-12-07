@@ -29,6 +29,7 @@ shadowJar {
     dependencies {
         exclude(dependency('com.github.virtuald:curvesapi'))
         exclude(dependency('commons-codec:commons-codec'))
+        exclude(dependency('commons-codec:commons-collections4'))
     }
 
     // Relocate javax dependencies so Android does not choke
