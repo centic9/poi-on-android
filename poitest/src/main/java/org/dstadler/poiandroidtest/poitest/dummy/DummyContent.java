@@ -31,9 +31,9 @@ public class DummyContent {
         DummyContent.ITEMS.clear();
 
         // Add 3 sample items.
-        addItem(new DummyItem("1", "Item 1", "Long Item 1"));
-        addItem(new DummyItem("2", "Item 2", "Long Item 1"));
-        addItem(new DummyItem("3", "Item 3", "Long Item 1"));
+        addItem(new DummyItem("l1", "Item 1", "Long Item 1"));
+        addItem(new DummyItem("l2", "Item 2", "Long Item 2"));
+        addItem(new DummyItem("l3", "Item 3", "Long Item 3"));
     }
 
     public static void addItem(DummyItem item) {
@@ -45,9 +45,9 @@ public class DummyContent {
      * A dummy item representing a piece of content.
      */
     public static class DummyItem {
-        public String id;
-        public String content;
-        public String longContent;
+        private String id;
+        private String content;
+        private String longContent;
 
         public DummyItem(String id, String content, String longContent) {
             this.id = id;
@@ -55,9 +55,26 @@ public class DummyContent {
             this.longContent = longContent;
         }
 
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public void appendContent(String content) {
+            this.content += " - " + content;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getLongContent() {
+            return longContent;
+        }
+
         @Override
         public String toString() {
             return content;
         }
     }
+
 }

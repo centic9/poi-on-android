@@ -52,7 +52,7 @@ public class DocumentDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.document_detail)).setText(mItem.longContent);
+            ((TextView) rootView.findViewById(R.id.document_detail)).setText(mItem.getLongContent());
         }
 
         return rootView;

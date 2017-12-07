@@ -19,10 +19,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
+import org.dstadler.poiandroidtest.poitest.dummy.DummyItemWithCode;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 
 /**
@@ -75,12 +77,12 @@ public class DocumentListActivity extends Activity
             Row row = wb.getSheetAt(0).getRow(0);
             for (Map.Entry<String, DummyContent.DummyItem> entry : DummyContent.ITEM_MAP.entrySet()) {
                 Cell cell = row.getCell(i);
-                entry.getValue().content = cell.getStringCellValue();
+                entry.getValue().setContent(cell.getStringCellValue());
 
                 // read hyperlink back in and add it to the displayed text
                 Hyperlink hyperlink = cell.getHyperlink();
                 if(hyperlink != null) {
-                    entry.getValue().content += " - " + hyperlink.getAddress();
+                    entry.getValue().appendContent(hyperlink.getAddress());
                 }
 
                 i++;
@@ -88,12 +90,23 @@ public class DocumentListActivity extends Activity
 
             wb.close();
 
+            DummyContent.addItem(new DummyItemWithCode("c1", "Test Callable", new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    return "Result from Test Callable";
+                }
+            }));
+
             InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum);
             try {
                 XWPFDocument doc = new XWPFDocument(docFile);
                 try {
                     for(XWPFParagraph paragraph : doc.getParagraphs()) {
-                        DummyContent.addItem(new DummyContent.DummyItem(Integer.toString(i), StringUtils.abbreviate(paragraph.getText(), 20), paragraph.getText()));
+                        String content = StringUtils.abbreviate(paragraph.getText(), 20);
+                        if(StringUtils.isEmpty(content)) {
+                            content = "<empty>";
+                        }
+                        DummyContent.addItem(new DummyContent.DummyItem("z" + Integer.toString(i), content, paragraph.getText()));
                         i++;
                     }
                 } finally {
