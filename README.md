@@ -26,6 +26,12 @@ application (let me know if you know of a better way to do this, see issue #10)
     System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
     System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
 
+##### Dependencies
+
+Note: The dependencies of Apache POI are not included in the shading to keep it's size at bay. If you use code
+areas which require commons-codec, commons-collections4 or any of the other dependencies, you will need to define
+them in your Android application in addition to the poishadow-all.jar file dependency.
+
 ##### Use a pre-built jar
 
 If you want to get started quickly, there is a ready-made jar-file available in the 
