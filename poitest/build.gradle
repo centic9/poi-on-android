@@ -1,5 +1,22 @@
 apply plugin: 'com.android.application'
 
+dependencies {
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:support-v4:25.2.0'
+    compile 'org.apache.commons:commons-text:1.1'
+    // for unit-tests copied from Apache POI source
+    compile 'junit:junit:4.12'
+    compile 'org.bouncycastle:bcpkix-jdk15on:1.58'
+
+    // newer versions of xmlsec are compiled with JDK 8 which does not work in Android Studio 2.x!
+    compile ('org.apache.santuario:xmlsec:2.0.0') {
+        // break compilation because it includes stax-api which is under forbidden package "javax.xml.stream"
+        exclude group: 'org.codehaus.woodstox'
+    }
+
+    compile files('../poishadow/build/libs/poishadow-all.jar')
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -32,12 +49,18 @@ android {
         // I could not exclude these in the
         abortOnError false
     }
-}
 
-dependencies {
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:support-v4:25.2.0'
-    compile 'org.apache.commons:commons-text:1.1'
-
-    compile files('../poishadow/build/libs/poishadow-all.jar')
+    // error about duplicates if some of these are not excluded
+    packagingOptions {
+        pickFirst 'META-INF/DEPENDENCIES.txt'
+        pickFirst 'META-INF/LICENSE.txt'
+        pickFirst 'META-INF/NOTICE.txt'
+        pickFirst 'META-INF/NOTICE'
+        pickFirst 'META-INF/LICENSE'
+        pickFirst 'META-INF/DEPENDENCIES'
+        pickFirst 'META-INF/notice.txt'
+        pickFirst 'META-INF/license.txt'
+        pickFirst 'META-INF/dependencies.txt'
+        pickFirst 'META-INF/LGPL2.1'
+    }
 }

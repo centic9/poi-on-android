@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.common.usermodel.HyperlinkType;
+import org.apache.poi.poifs.crypt.TestSignatureInfo;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.Row;
@@ -94,6 +95,15 @@ public class DocumentListActivity extends Activity
                 @Override
                 public String call() throws Exception {
                     return "Result from Test Callable";
+                }
+            }));
+
+            DummyContent.addItem(new DummyItemWithCode("c2", "Test Signature Info - Crashes!!", new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    TestSignatureInfo test = new TestSignatureInfo();
+                    test.testConstruct();
+                    return "Signature Info constructed successfully";
                 }
             }));
 
