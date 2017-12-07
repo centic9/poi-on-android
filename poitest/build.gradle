@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:support-v4:25.2.0'
+    compile 'com.android.support:support-v4:25.3.1'
     compile 'org.apache.commons:commons-text:1.1'
     // for unit-tests copied from Apache POI source
     compile 'junit:junit:4.12'
