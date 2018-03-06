@@ -19,10 +19,12 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyItemWithCode;
 import org.dstadler.poiandroidtest.poitest.test.TestIssue28;
 
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
@@ -127,6 +129,16 @@ public class DocumentListActivity extends Activity
                         }
                         DummyContent.addItem(new DummyContent.DummyItem("z" + Integer.toString(i), content, paragraph.getText()));
                         i++;
+                    }
+
+                    final XWPFParagraph title = doc.createParagraph();
+                    final XWPFRun titleRun = title.createRun();
+                    titleRun.setCharacterSpacing(2);
+                    FileOutputStream stream = openFileOutput("test.docx", Context.MODE_PRIVATE);
+                    try {
+                        doc.write(stream);
+                    } finally {
+                        stream.close();
                     }
                 } finally {
                     doc.close();
