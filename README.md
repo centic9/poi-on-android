@@ -26,6 +26,11 @@ application (let me know if you know of a better way to do this, see issue #10)
     System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
     System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
 
+##### Supported Android versions
+
+The sample project uses API level 15, which maps to Android 4.0.3. Theoretically lower versions should work 
+as well, but we do not test these to avoid this additional effort.
+
 ##### Dependencies
 
 Note: The dependencies of Apache POI are not included in the shading to keep it's size at bay. If you use code
@@ -119,7 +124,7 @@ Install the apk
 
 #### Licensing
 
-   Copyright 2015-2017 Dominik Stadler
+   Copyright 2015-2018 Dominik Stadler
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
