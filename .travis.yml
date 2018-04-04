@@ -10,7 +10,7 @@ language: android
 jdk: oraclejdk8
 env:
   matrix:
-    - ANDROID_TARGET=android-27  ANDROID_ABI=google_apis/armeabi-v7a QEMU_AUDIO_DRV=none
+    - ANDROID_TARGET=android-27 ANDROID_ABI=google_apis/armeabi-v7a QEMU_AUDIO_DRV=none
 
 android:
   components:
@@ -35,9 +35,8 @@ android:
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
-    #- sys-img-armeabi-v7a-android-19
-    #- sys-img-x86-android-17
-    - sys-img-armeabi-v7a-google_apis-27
+    - sys-img-armeabi-v7a-android-22
+    - sys-img-armeabi-v7a-android-17
 
   licenses:
     - android-sdk-license-.+
