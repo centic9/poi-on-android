@@ -133,7 +133,7 @@ public class DocumentListActivity extends Activity
 
                     final XWPFParagraph title = doc.createParagraph();
                     final XWPFRun titleRun = title.createRun();
-                    titleRun.setCharacterSpacing(2);
+                    // TODO: enable this with POI 4.0.0 as only then we have CTSignedTwipsMeasure: titleRun.setCharacterSpacing(2);
                     FileOutputStream stream = openFileOutput("test.docx", Context.MODE_PRIVATE);
                     try {
                         doc.write(stream);
