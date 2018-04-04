@@ -5,12 +5,19 @@
 # * https://github.com/andrewhr/rxjava-android-example/blob/master/.travis.yml
 # * https://github.com/Ruenzuo/android-cd-travis-example/blob/master/.travis.yml
 # * http://stackoverflow.com/a/27844077/411846
+# * https://stackoverflow.com/questions/28751111/invalid-abi-armeabi-v7a-for-the-selected-target-with-google-apis
+
+env:
+  global:
+    - ANDROID_API_LEVEL=27
+    - ANDROID_BUILD_TOOLS_VERSION=27.0.3
+    - ANDROID_ABI=google_apis/armeabi-v7a
 
 language: android
 jdk: oraclejdk8
 env:
   matrix:
-    - ANDROID_TARGET=android-27 ANDROID_ABI=google_apis/armeabi-v7a QEMU_AUDIO_DRV=none
+    - ANDROID_TARGET=android-$ANDROID_API_LEVEL QEMU_AUDIO_DRV=none
 
 android:
   components:
@@ -22,10 +29,10 @@ android:
     - tools
 
     # The BuildTools version used by your project
-    - build-tools-27.0.3
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
 
     # The SDK version used to compile your project
-    - android-27
+    - $ANDROID_TARGET
 
     # Additional components
     #- extra-google-google_play_services
@@ -35,8 +42,7 @@ android:
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-22
-    - sys-img-armeabi-v7a-android-17
+    - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
 
   licenses:
     - android-sdk-license-.+
