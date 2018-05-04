@@ -38,9 +38,13 @@ shadowJar {
     relocate 'javax.xml.namespace', 'org.apache.poi.javax.xml.namespace'
     relocate 'javax.xml.stream', 'org.apache.poi.javax.xml.stream'
     relocate 'javax.xml.XMLConstants', 'org.apache.poi.javax.xml.XMLConstants'
-    // java.awt is not available, but class Color is used in APIs in POI, therefore
-    // relocate this class to another one where we can include a rewrite
+
+    // java.awt is not available on Android, but java.awt.Color is used in APIs in POI,
+    // therefore relocate this class to another one where we can include a rewrite
     relocate 'java.awt.Color', 'org.apache.poi.java.awt.Color'
+    relocate 'java.awt.font.FontRenderContext', 'org.apache.poi.java.awt.font.FontRenderContext'
+    relocate 'java.awt.font.TextLayout', 'org.apache.poi.java.awt.font.TextLayout'
+    relocate 'java.awt.geom.Rectangle2D', 'org.apache.poi.java.awt.geom.Rectangle2D'
 }
 
 jar.dependsOn shadowJar
