@@ -73,6 +73,10 @@ Configure the version of the Android Build Tools that you have installed.
 
     vi poitest/build.gradle
 
+Then build the shadow-jar, for some reason this works better if executed separately:
+
+    ./gradlew shadowJar
+
 Finally run the build and some testing. Make sure you have a device connected, e.g. the Android emulator.
 
     ./gradlew build connectedCheck
