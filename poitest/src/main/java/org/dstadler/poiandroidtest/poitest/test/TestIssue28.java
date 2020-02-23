@@ -17,7 +17,7 @@ public class TestIssue28 {
         Workbook wb = new HSSFWorkbook();
 
         CellStyle cs = wb.createCellStyle();
-        cs.setFillForegroundColor(HSSFColor.LIME.index);
+        cs.setFillForegroundColor(HSSFColor.HSSFColorPredefined.LIME.getIndex());
 
         Sheet sheet1 = wb.createSheet("wrok");
 
