@@ -1,6 +1,6 @@
 plugins {
     id 'java' // java plugin must be explicitly applied for shadow plugin
-    id 'com.github.johnrengelman.shadow' version '2.0.3'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
 sourceCompatibility = 1.7
@@ -10,8 +10,8 @@ repositories {
 }
 
 dependencies {
-    compile 'org.apache.poi:poi-ooxml:3.17'
-    compile 'com.fasterxml:aalto-xml:1.1.0'
+    implementation 'org.apache.poi:poi-ooxml:3.17'
+    implementation 'com.fasterxml:aalto-xml:1.1.0'
 }
 
 shadowJar {
