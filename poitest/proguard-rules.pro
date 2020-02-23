@@ -13,12 +13,18 @@
 -dontwarn org.w3.**
 -dontwarn com.microsoft.schemas.**
 -dontwarn com.graphbuilder.**
+-dontwarn javax.naming.**
+-dontwarn java.lang.management.**
+-dontwarn org.slf4j.impl.**
 -dontnote org.apache.**
 -dontnote org.openxmlformats.schemas.**
 -dontnote org.etsi.**
 -dontnote org.w3.**
 -dontnote com.microsoft.schemas.**
 -dontnote com.graphbuilder.**
+-dontnote javax.naming.**
+-dontnote java.lang.management.**
+-dontnote org.slf4j.impl.**
 
 -keeppackagenames org.apache.poi.ss.formula.function
 
