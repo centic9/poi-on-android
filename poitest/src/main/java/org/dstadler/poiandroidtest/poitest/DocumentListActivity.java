@@ -96,14 +96,14 @@ public class DocumentListActivity extends Activity
 
             DummyContent.addItem(new DummyItemWithCode("c1", "Test Callable", new Callable<String>() {
                 @Override
-                public String call() throws Exception {
+                public String call() {
                     return "Result from Test Callable";
                 }
             }));
 
             DummyContent.addItem(new DummyItemWithCode("c2", "Test Signature Info - Crashes!!", new Callable<String>() {
                 @Override
-                public String call() throws Exception {
+                public String call() {
                     TestSignatureInfo test = new TestSignatureInfo();
                     test.testConstruct();
                     return "Signature Info constructed successfully";
@@ -127,7 +127,7 @@ public class DocumentListActivity extends Activity
                         if(StringUtils.isEmpty(content)) {
                             content = "<empty>";
                         }
-                        DummyContent.addItem(new DummyContent.DummyItem("z" + Integer.toString(i), content, paragraph.getText()));
+                        DummyContent.addItem(new DummyContent.DummyItem("z" + i, content, paragraph.getText()));
                         i++;
                     }
 
