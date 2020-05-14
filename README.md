@@ -83,6 +83,10 @@ Finally run the build and some testing. Make sure you have a device connected, e
 
 For only the jar-files run just `build`
 
+#### Support this project
+
+If you find this tool useful and would like to support it, you can [Sponsor the author](https://github.com/sponsors/centic9)
+
 #### Run the Android emulator
 
 List available emulators
