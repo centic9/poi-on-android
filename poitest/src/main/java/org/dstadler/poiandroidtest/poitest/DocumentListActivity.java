@@ -140,6 +140,15 @@ public class DocumentListActivity extends Activity
                     } finally {
                         stream.close();
                     }
+
+                    int sheetCount = doc.getProperties().getExtendedProperties().getPages();
+
+                    DummyContent.addItem(new DummyItemWithCode("c4", "SheetCount " + sheetCount, new Callable<String>() {
+                        @Override
+                        public String call() {
+                            return "Called";
+                        }
+                    }));
                 } finally {
                     doc.close();
                 }
