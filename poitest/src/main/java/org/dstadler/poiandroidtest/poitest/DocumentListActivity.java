@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.Version;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.poifs.crypt.TestSignatureInfo;
 import org.apache.poi.ss.usermodel.Cell;
@@ -93,6 +94,13 @@ public class DocumentListActivity extends Activity
             }
 
             wb.close();
+
+            DummyContent.addItem(new DummyItemWithCode("v1", "POI Version", new Callable<String>() {
+                @Override
+                public String call() {
+                    return "Apache " + Version.getProduct() + " " + Version.getVersion() + " (" + Version.getReleaseDate() + ")";
+                }
+            }));
 
             DummyContent.addItem(new DummyItemWithCode("c1", "Test Callable", new Callable<String>() {
                 @Override
