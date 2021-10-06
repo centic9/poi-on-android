@@ -1,0 +1,79 @@
+--- /tmp/xmlbeans-3.1.0/org/apache/xmlbeans/impl/store/Locale.java	2019-03-16 00:29:18.000000000 +0100
++++ ./poishadow/src/main/java/org/apache/xmlbeans/impl/store/Locale.java	2021-10-06 15:43:45.279351109 +0200
+@@ -32,7 +32,6 @@
+ import java.util.Map;
+ 
+ import java.lang.ref.ReferenceQueue;
+-import java.lang.ref.Reference;
+ import java.lang.ref.PhantomReference;
+ import java.lang.ref.SoftReference;
+ 
+@@ -62,6 +61,8 @@
+ import org.apache.xmlbeans.impl.common.XmlLocale;
+ import org.apache.xmlbeans.impl.common.ResolverUtil;
+ import org.apache.xmlbeans.impl.common.SystemCache;
++import org.apache.xmlbeans.impl.common.XBLogger;
++import org.apache.xmlbeans.impl.common.XBLogFactory;
+ 
+ import org.apache.xmlbeans.impl.store.Saaj.SaajCallback;
+ 
+@@ -104,9 +105,19 @@
+ import org.w3c.dom.NamedNodeMap;
+ import org.w3c.dom.Element;
+ 
++/**
++ * This class is to replace Locale class within XMLBeans 3.x (bundled with POI 4.0.x and POI 4.1.x)
++ * that will crash in Android environment.
++ * <p />
++ * There ar two changes to avoid crash: <br/>
++ * 1. Fix http://xml.org/sax/properties/declaration-handler error based on this <a href="https://github.com/apache/xmlbeans/commit/68a790420397a4bced610af951614e53d0bfe26a">commit</a><br/>
++ * 2. Fix "namespace-prefix" is not supported when 'namespace' is enabled error. check source code line 3396.
++ */
+ public final class Locale
+     implements DOMImplementation, SaajCallback, XmlLocale
+ {
++    private static final XBLogger logger = XBLogFactory.getLogger(Locale.class);
++
+     static final int ROOT = Cur.ROOT;
+     static final int ELEM = Cur.ELEM;
+     static final int ATTR = Cur.ATTR;
+@@ -193,7 +204,7 @@
+      * This option is checked in XmlObjectBase._copy(XmlOptions), the locale is used as the synchronization domain.
+      * useNewLocale = true: copy will use a new locale, false: copy will use the same locale as the source
+      * @deprecated Replace usages with CopyUseNewSynchronizationDomain option
+-     * @see org.apache.xmlbeans.XmlOptions#setCopyUseNewSynchronizationDomain(boolean)
++     * @see XmlOptions#setCopyUseNewSynchronizationDomain(boolean)
+      */
+     public static final String COPY_USE_NEW_LOCALE             = "COPY_USE_NEW_LOCALE";
+ 
+@@ -3381,14 +3392,12 @@
+ 
+             try
+             {
+-                _xr.setFeature(
+-                    "http://xml.org/sax/features/namespace-prefixes", true);
++                //_xr.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+                 _xr.setFeature("http://xml.org/sax/features/namespaces", true);
+                 _xr.setFeature("http://xml.org/sax/features/validation", false);
+                 _xr.setProperty(
+                     "http://xml.org/sax/properties/lexical-handler", this);
+                 _xr.setContentHandler(this);
+-                _xr.setProperty("http://xml.org/sax/properties/declaration-handler", this);
+                 _xr.setDTDHandler(this);
+                 _xr.setErrorHandler(this);
+             }
+@@ -3396,6 +3405,14 @@
+             {
+                 throw new RuntimeException(e.getMessage(), e);
+             }
++            try
++            {
++                _xr.setProperty("http://xml.org/sax/properties/declaration-handler", this);
++            }
++            catch (Throwable e)
++            {
++                logger.log(XBLogger.WARN, "SAX Declaration Handler is not supported", e);
++            }
+         }
+ 
+         void setEntityResolver(EntityResolver er)
