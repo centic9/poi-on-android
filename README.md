@@ -28,8 +28,8 @@ application (let me know if you know of a better way to do this, see issue #10)
 
 ##### Supported Android versions
 
-The sample project uses API level 15, which maps to Android 4.0.3. Theoretically lower versions should work 
-as well, but we do not test these to avoid this additional effort.
+The sample project uses API level 26, which maps to Android 8.0. Higher versions should work as well, 
+older ones might not be supported any more.
 
 ##### Dependencies
 
@@ -108,9 +108,7 @@ Install the apk
   just a small sample Android application to show that it works.
 * This was only tested in Android Studio with the Android
   emulator until now, should work on real Android as well, though!
-* Tested with `targetSdkVersion 25` and `minSdkVersion 15`,
-  although other versions should work as long as they support
-  `multiDexEnabled true`
+* Tested with `targetSdkVersion 26` and `minSdkVersion 26`
 
 #### Todo
 
@@ -132,7 +130,7 @@ Install the apk
 
 #### Licensing
 
-   Copyright 2015-2018 Dominik Stadler
+   Copyright 2015-2021 Dominik Stadler
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
