@@ -36,7 +36,7 @@ dependencies {
 preBuild.dependsOn ':poishadow:shadowJar'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
     buildToolsVersion '29.0.3'
 
     compileOptions {
@@ -48,7 +48,7 @@ android {
     defaultConfig {
         applicationId 'org.dstadler.poiandroidtest.poitest'
         minSdkVersion 26
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 3
         versionName '4.1.2'
 
