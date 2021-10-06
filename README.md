@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/centic9/poi-on-android.svg)](https://travis-ci.org/centic9/poi-on-android) [![Gradle Status](https://gradleupdate.appspot.com/centic9/poi-on-android/status.svg?branch=master)](https://gradleupdate.appspot.com/centic9/poi-on-android/status)
+[![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fcentic9%2Fpoi-on-android%2Fbadge&label=build&logo=none)](https://actions-badge.atrox.dev/centic9/poi-on-android/goto)
+[![Gradle Status](https://gradleupdate.appspot.com/centic9/poi-on-android/status.svg?branch=master)](https://gradleupdate.appspot.com/centic9/poi-on-android/status)
 
 This is a sample Android application to show how
 Apache POI can be used on Android.
