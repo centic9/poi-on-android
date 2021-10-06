@@ -19,7 +19,7 @@ public class TestIssue28 {
         CellStyle cs = wb.createCellStyle();
         cs.setFillForegroundColor(HSSFColor.HSSFColorPredefined.LIME.getIndex());
 
-        Sheet sheet1 = wb.createSheet("wrok");
+        Sheet sheet1 = wb.createSheet("work");
 
         Row row = sheet1.createRow(0);
         Cell c = row.createCell(0);
