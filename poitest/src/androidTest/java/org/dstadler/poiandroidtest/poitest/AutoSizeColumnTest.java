@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import static org.junit.Assert.assertEquals;
+
 @RunWith(AndroidJUnit4.class)
 public class AutoSizeColumnTest {
     /**
@@ -23,28 +25,20 @@ public class AutoSizeColumnTest {
         Row row = sheet.createRow(0);
         Cell cell = row.createCell(0);
         String shortString = "Chaîne courte";
-        int smallColumn = -1;
         cell.setCellValue(shortString);
-        try {
-            sheet.autoSizeColumn(0);
-            smallColumn = sheet.getColumnWidth(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assert(smallColumn == -1);
+        sheet.autoSizeColumn(0);
+        int smallColumn = sheet.getColumnWidth(0);
+        assertEquals("Font rendering is not fully implemented in the custom java.awt implementation",
+                2048, smallColumn);
 
         row = sheet.createRow(1);
         cell = row.createCell(1);
         String longString = "Chaîne longue, mais alors vraiment très longue, plus encore qu'on ne pouvait l'imaginer avant de la lire";
-        int largeColumn = -1;
         cell.setCellValue(longString);
-        try {
-            sheet.autoSizeColumn(1);
-            largeColumn = sheet.getColumnWidth(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assert(largeColumn == -1);
+        sheet.autoSizeColumn(1);
+        int largeColumn = sheet.getColumnWidth(1);
+        assertEquals("Font rendering is not fully implemented in the custom java.awt implementation",
+                2048, largeColumn);
 
         row = sheet.getRow(0);
         cell = row.createCell(1);
@@ -55,13 +49,9 @@ public class AutoSizeColumnTest {
         cell.setCellStyle(styleGras);
         String titleString = "Titre de colonne";
         cell.setCellValue(titleString);
-        int titreColumn = -1;
-        try {
-            sheet.autoSizeColumn(1);
-            titreColumn = sheet.getColumnWidth(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assert(titreColumn == (titleString.length() + 1));
+        sheet.autoSizeColumn(1);
+        int titreColumn = sheet.getColumnWidth(2);
+        assertEquals("Font rendering is not fully implemented in the custom java.awt implementation",
+                2048, titreColumn);
     }
 }
