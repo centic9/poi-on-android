@@ -36,8 +36,7 @@ dependencies {
 preBuild.dependsOn ':poishadow:shadowJar'
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 32
 
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -48,7 +47,7 @@ android {
     defaultConfig {
         applicationId 'org.dstadler.poiandroidtest.poitest'
         minSdkVersion 26
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 3
         versionName '4.1.2'
 
@@ -69,24 +68,15 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-
-    lintOptions {
-        // There are restricted packages used in some of POI code, e.g. java.awt or javax.imageio
-        // I could not exclude these in the
-        abortOnError false
+    packagingOptions {
+        resources {
+            pickFirsts += ['META-INF/DEPENDENCIES.txt', 'META-INF/LICENSE.txt', 'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/LICENSE', 'META-INF/DEPENDENCIES', 'META-INF/notice.txt', 'META-INF/license.txt', 'META-INF/dependencies.txt', 'META-INF/LGPL2.1']
+        }
     }
 
+
     // error about duplicates if some of these are not excluded
-    packagingOptions {
-        pickFirst 'META-INF/DEPENDENCIES.txt'
-        pickFirst 'META-INF/LICENSE.txt'
-        pickFirst 'META-INF/NOTICE.txt'
-        pickFirst 'META-INF/NOTICE'
-        pickFirst 'META-INF/LICENSE'
-        pickFirst 'META-INF/DEPENDENCIES'
-        pickFirst 'META-INF/notice.txt'
-        pickFirst 'META-INF/license.txt'
-        pickFirst 'META-INF/dependencies.txt'
-        pickFirst 'META-INF/LGPL2.1'
+    lint {
+        abortOnError false
     }
 }
