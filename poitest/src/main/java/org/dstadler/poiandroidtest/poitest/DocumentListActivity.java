@@ -75,29 +75,28 @@ public class DocumentListActivity extends Activity
         try {
             writeWorkbook();
 
-            InputStream input = openFileInput("test.xlsx");
-            Workbook wb = WorkbookFactory.create(input);
-
-            // refresh the content as we re-enter here if the user navigates back from the detail view
-            DummyContent.initialize();
-
-            // replace the dummy-content to show that we could write and read the cell-values
             int i = 0;
-            Row row = wb.getSheetAt(0).getRow(0);
-            for (Map.Entry<String, DummyContent.DummyItem> entry : DummyContent.ITEM_MAP.entrySet()) {
-                Cell cell = row.getCell(i);
-                entry.getValue().setContent(cell.getStringCellValue());
+            InputStream input = openFileInput("test.xlsx");
+            try (Workbook wb = WorkbookFactory.create(input)) {
 
-                // read hyperlink back in and add it to the displayed text
-                Hyperlink hyperlink = cell.getHyperlink();
-                if(hyperlink != null) {
-                    entry.getValue().appendContent(hyperlink.getAddress());
+                // refresh the content as we re-enter here if the user navigates back from the detail view
+                DummyContent.initialize();
+
+                // replace the dummy-content to show that we could write and read the cell-values
+                Row row = wb.getSheetAt(0).getRow(0);
+                for (Map.Entry<String, DummyContent.DummyItem> entry : DummyContent.ITEM_MAP.entrySet()) {
+                    Cell cell = row.getCell(i);
+                    entry.getValue().setContent(cell.getStringCellValue());
+
+                    // read hyperlink back in and add it to the displayed text
+                    Hyperlink hyperlink = cell.getHyperlink();
+                    if (hyperlink != null) {
+                        entry.getValue().appendContent(hyperlink.getAddress());
+                    }
+
+                    i++;
                 }
-
-                i++;
             }
-
-            wb.close();
 
             DummyContent.addItem(new DummyItemWithCode("v1", "POI Version",
                     () -> "Apache " + Version.getProduct() + " " + Version.getVersion() + " (" + Version.getReleaseDate() + ")"));
@@ -200,8 +199,7 @@ public class DocumentListActivity extends Activity
     }
 
     private void writeWorkbook() throws java.io.IOException {
-        Workbook wb = new XSSFWorkbook();
-        try {
+        try (Workbook wb = new XSSFWorkbook()) {
             Sheet sheet = wb.createSheet("Sheet1");
             Row row = sheet.createRow(0);
             Cell cell = row.createCell(0);
@@ -224,14 +222,9 @@ public class DocumentListActivity extends Activity
 
             sheet.setPrintGridlines(true);
 
-            OutputStream stream = openFileOutput("test.xlsx", Context.MODE_PRIVATE);
-            try {
+            try (OutputStream stream = openFileOutput("test.xlsx", Context.MODE_PRIVATE)) {
                 wb.write(stream);
-            } finally {
-                stream.close();
             }
-        } finally {
-            wb.close();
         }
     }
 
