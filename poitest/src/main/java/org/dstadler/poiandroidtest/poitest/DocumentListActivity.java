@@ -8,6 +8,8 @@ import android.os.Bundle;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.Version;
 import org.apache.poi.common.usermodel.HyperlinkType;
+import org.apache.poi.hslf.usermodel.HSLFSlide;
+import org.apache.poi.hslf.usermodel.HSLFSlideShow;
 import org.apache.poi.poifs.crypt.TestSignatureInfo;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Hyperlink;
@@ -15,6 +17,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xslf.usermodel.XMLSlideShow;
+import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
@@ -124,8 +128,7 @@ public class DocumentListActivity extends Activity
                 return "Issue 28 tested successfully";
             }));
 
-            InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum);
-            try {
+            try (InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum)) {
                 XWPFDocument doc = new XWPFDocument(docFile);
                 try {
                     for(XWPFParagraph paragraph : doc.getParagraphs()) {
@@ -154,8 +157,26 @@ public class DocumentListActivity extends Activity
                 } finally {
                     doc.close();
                 }
-            } finally {
-                docFile.close();
+            }
+
+            try (InputStream slidesFile = getResources().openRawResource(R.raw.sample)) {
+                try (XMLSlideShow slides = new XMLSlideShow(slidesFile)) {
+                    for (XSLFSlide slide : slides.getSlides()) {
+                        DummyContent.addItem(new DummyItemWithCode("c4",
+                                "Slide - " + slide.getSlideName(),
+                                slide::getTitle));
+                    }
+                }
+            }
+
+            try (InputStream slidesFile = getResources().openRawResource(R.raw.sample2)) {
+                try (HSLFSlideShow slides = new HSLFSlideShow(slidesFile)) {
+                    for (HSLFSlide slide : slides.getSlides()) {
+                        DummyContent.addItem(new DummyItemWithCode("c4",
+                                "Slide - " + slide.getSlideName(),
+                                slide::getTitle));
+                    }
+                }
             }
         } catch (Exception e) {
             throw new IllegalStateException(e);
