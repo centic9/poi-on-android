@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -24,13 +25,12 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyItemWithCode;
 import org.dstadler.poiandroidtest.poitest.test.TestIssue28;
+import org.dstadler.poiandroidtest.poitest.test.TestIssue89;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
-import java.util.concurrent.Callable;
-
 
 /**
  * An activity representing a list of Documents. This activity
@@ -95,35 +95,33 @@ public class DocumentListActivity extends Activity
 
             wb.close();
 
-            DummyContent.addItem(new DummyItemWithCode("v1", "POI Version", new Callable<String>() {
-                @Override
-                public String call() {
-                    return "Apache " + Version.getProduct() + " " + Version.getVersion() + " (" + Version.getReleaseDate() + ")";
-                }
+            DummyContent.addItem(new DummyItemWithCode("v1", "POI Version",
+                    () -> "Apache " + Version.getProduct() + " " + Version.getVersion() + " (" + Version.getReleaseDate() + ")"));
+
+            DummyContent.addItem(new DummyItemWithCode("c1", "Test Callable",
+                    () -> "This is the result from the callable"));
+
+            DummyContent.addItem(new DummyItemWithCode("c2", "Test Signature Info - Crashes!!",
+                    () -> {
+                TestSignatureInfo test = new TestSignatureInfo();
+                test.testConstruct();
+                return "Signature Info constructed successfully";
             }));
 
-            DummyContent.addItem(new DummyItemWithCode("c1", "Test Callable", new Callable<String>() {
-                @Override
-                public String call() {
-                    return "Result from Test Callable";
+            // reproducer for https://github.com/centic9/poi-on-android/issues/89
+            DummyContent.addItem(new DummyItemWithCode("c2", "Test SXSSFWorkbook - Crashes!!", () -> {
+                try (FileOutputStream outputStream = openFileOutput("issue89.xlsx", Context.MODE_PRIVATE)) {
+                    TestIssue89.saveExcelFile(outputStream);
                 }
+
+                return "Issue 89 - SXSSFWorkbook constructed successfully";
             }));
 
-            DummyContent.addItem(new DummyItemWithCode("c2", "Test Signature Info - Crashes!!", new Callable<String>() {
-                @Override
-                public String call() {
-                    TestSignatureInfo test = new TestSignatureInfo();
-                    test.testConstruct();
-                    return "Signature Info constructed successfully";
+            DummyContent.addItem(new DummyItemWithCode("c3", "Test Issue 28", () -> {
+                try (FileOutputStream outputStream = openFileOutput("issue28.xlsx", Context.MODE_PRIVATE)) {
+                    TestIssue28.saveExcelFile(outputStream);
                 }
-            }));
-
-            DummyContent.addItem(new DummyItemWithCode("c3", "Test Issue 28", new Callable<String>() {
-                @Override
-                public String call() throws Exception {
-                    TestIssue28.saveExcelFile(openFileOutput("issue28.xlsx", Context.MODE_PRIVATE));
-                    return "Issue 28 tested successfully";
-                }
+                return "Issue 28 tested successfully";
             }));
 
             InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum);
@@ -141,7 +139,7 @@ public class DocumentListActivity extends Activity
 
                     final XWPFParagraph title = doc.createParagraph();
                     final XWPFRun titleRun = title.createRun();
-                    // TODO: enable this with POI 4.0.0 as only then we have CTSignedTwipsMeasure: titleRun.setCharacterSpacing(2);
+                    titleRun.setCharacterSpacing(2);
                     FileOutputStream stream = openFileOutput("test.docx", Context.MODE_PRIVATE);
                     try {
                         doc.write(stream);
@@ -151,12 +149,8 @@ public class DocumentListActivity extends Activity
 
                     int sheetCount = doc.getProperties().getExtendedProperties().getPages();
 
-                    DummyContent.addItem(new DummyItemWithCode("c4", "SheetCount " + sheetCount, new Callable<String>() {
-                        @Override
-                        public String call() {
-                            return "Called";
-                        }
-                    }));
+                    DummyContent.addItem(new DummyItemWithCode("c4", "SheetCount " + sheetCount,
+                            () -> "Called"));
                 } finally {
                     doc.close();
                 }
@@ -197,7 +191,8 @@ public class DocumentListActivity extends Activity
             cell.setCellValue("cell-3");
 
             XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
-            style.setFillBackgroundColor(new XSSFColor(new org.apache.poi.java.awt.Color(1, 2, 3)));
+            style.setFillBackgroundColor(new XSSFColor(
+                    new org.apache.poi.java.awt.Color(1, 2, 3), new DefaultIndexedColorMap()));
 
             Hyperlink link = wb.getCreationHelper().createHyperlink(HyperlinkType.URL);
             link.setAddress("http://www.google.at");
