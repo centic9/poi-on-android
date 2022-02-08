@@ -1,8 +1,9 @@
 * text eol=lf
 *.png binary
-*.doc
+*.jpg binary
+*.doc binary
 *.docx binary
-*.xls
+*.xls binary
 *.xlsx binary
 *.ppt binary
 *.pptx binary
