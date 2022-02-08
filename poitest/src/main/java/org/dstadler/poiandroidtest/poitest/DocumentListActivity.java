@@ -29,6 +29,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyItemWithCode;
 import org.dstadler.poiandroidtest.poitest.test.TestIssue28;
+import org.dstadler.poiandroidtest.poitest.test.TestIssue75;
 import org.dstadler.poiandroidtest.poitest.test.TestIssue84;
 import org.dstadler.poiandroidtest.poitest.test.TestIssue89;
 
@@ -113,15 +114,25 @@ public class DocumentListActivity extends Activity
             }));
 
             DummyContent.addItem(new DummyItemWithCode("c3", "Test Issue 28", () -> {
-                try (FileOutputStream outputStream = openFileOutput("issue28.xlsx", Context.MODE_PRIVATE)) {
+                try (OutputStream outputStream = openFileOutput("issue28.xlsx", Context.MODE_PRIVATE)) {
                     TestIssue28.saveExcelFile(outputStream);
                 }
                 return "Issue 28 tested successfully";
             }));
 
+            // reproducer for https://github.com/centic9/poi-on-android/issues/75
+            DummyContent.addItem(new DummyItemWithCode("c2", "Test Issue 75 - Crashes!!", () -> {
+                try (InputStream pictureStream = openFileInput("logo.jpg");
+                        OutputStream outputStream = openFileOutput("issue75.xlsx", Context.MODE_PRIVATE)) {
+                    TestIssue75.saveExcelFile(pictureStream, outputStream);
+                }
+
+                return "Issue 75 - XMLSlideShow constructed successfully";
+            }));
+
             // reproducer for https://github.com/centic9/poi-on-android/issues/84
             DummyContent.addItem(new DummyItemWithCode("c2", "Test Issue 84 - Crashes!!", () -> {
-                try (FileOutputStream outputStream = openFileOutput("issue84.xlsx", Context.MODE_PRIVATE)) {
+                try (OutputStream outputStream = openFileOutput("issue84.xlsx", Context.MODE_PRIVATE)) {
                     TestIssue84.saveExcelFile(outputStream);
                 }
 
@@ -130,7 +141,7 @@ public class DocumentListActivity extends Activity
 
             // reproducer for https://github.com/centic9/poi-on-android/issues/89
             DummyContent.addItem(new DummyItemWithCode("c2", "Test Issue 89 - Crashes!!", () -> {
-                try (FileOutputStream outputStream = openFileOutput("issue89.xlsx", Context.MODE_PRIVATE)) {
+                try (OutputStream outputStream = openFileOutput("issue89.xlsx", Context.MODE_PRIVATE)) {
                     TestIssue89.saveExcelFile(outputStream);
                 }
 

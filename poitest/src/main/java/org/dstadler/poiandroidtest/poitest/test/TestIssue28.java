@@ -8,11 +8,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 public class TestIssue28 {
-    public static void saveExcelFile(FileOutputStream outputStream) throws IOException {
+    public static void saveExcelFile(OutputStream outputStream) throws IOException {
 
         Workbook wb = new HSSFWorkbook();
 

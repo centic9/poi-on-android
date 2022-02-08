@@ -7,11 +7,11 @@ import org.apache.poi.xslf.usermodel.XSLFTextBox;
 import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 public class TestIssue84 {
-    public static void saveExcelFile(FileOutputStream outputStream) throws IOException {
+    public static void saveExcelFile(OutputStream outputStream) throws IOException {
         XMLSlideShow ppt = new XMLSlideShow();
         XSLFSlide slide = ppt.createSlide();
         XSLFTextBox shape = slide.createTextBox();
