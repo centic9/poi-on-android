@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/centic9/poi-on-android/actions/workflows/build.yaml/badge.svg)](https://github.com/centic9/poi-on-android/actions/workflows/build.yaml/badge.svg)
+[![Build Status](https://github.com/centic9/poi-on-android/actions/workflows/build.yaml/badge.svg)](https://github.com/centic9/poi-on-android/actions)
 [![Gradle Status](https://gradleupdate.appspot.com/centic9/poi-on-android/status.svg?branch=master)](https://gradleupdate.appspot.com/centic9/poi-on-android/status)
 [![Release](https://img.shields.io/github/release/centic9/poi-on-android.svg)](https://github.com/centic9/poi-on-android/releases)
 [![GitHub release](https://img.shields.io/github/release/centic9/poi-on-android.svg?label=changelog)](https://github.com/centic9/poi-on-android/releases/latest)
