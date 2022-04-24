@@ -65,7 +65,7 @@ You will need the following pieces in order to get started
 
 Get the code:
 
-    git clone git://github.com/centic9/poi-on-android
+    git clone https://github.com/centic9/poi-on-android.git
     cd poi-on-android
 
 Configure where your Android SDK resides:
@@ -119,6 +119,11 @@ Install the apk
   currently it just creates a new spreadsheet, adds some data
   then stores it in the Application storage area and reads it
   again from there.
+* Some parts of the JDK are missing on Android, e.g. AWT-related classes.
+  Some of these are missing when some functionality of Apache POI
+  is used and thus currently crash the sample project. 
+  There are some libraries which provide these classes, but none
+  was in a state that allowed it to easily integrate it here.
 
 #### Links
 
@@ -133,7 +138,7 @@ Install the apk
 
 #### Licensing
 
-   Copyright 2015-2021 Dominik Stadler
+   Copyright 2015-2022 Dominik Stadler
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
