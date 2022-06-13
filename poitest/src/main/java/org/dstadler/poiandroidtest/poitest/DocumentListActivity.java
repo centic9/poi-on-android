@@ -64,6 +64,8 @@ public class DocumentListActivity extends Activity
      */
     private boolean mTwoPane;
 
+    private int idCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,20 +102,20 @@ public class DocumentListActivity extends Activity
                 }
             }
 
-            DummyContent.addItem(new DummyItemWithCode("v1", "POI Version",
+            DummyContent.addItem(new DummyItemWithCode("v" + (idCount++), "POI Version",
                     () -> "Apache " + Version.getProduct() + " " + Version.getVersion() + " (" + Version.getReleaseDate() + ")"));
 
-            DummyContent.addItem(new DummyItemWithCode("c1", "Test Callable",
+            DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Callable",
                     () -> "This is the result from the callable"));
 
-            DummyContent.addItem(new DummyItemWithCode("c2", "Test Signature Info - Crashes!!",
+            DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Signature Info - Crashes!!",
                     () -> {
                 TestSignatureInfo test = new TestSignatureInfo();
                 test.testConstruct();
                 return "Signature Info constructed successfully";
             }));
 
-            DummyContent.addItem(new DummyItemWithCode("c3", "Test Issue 28", () -> {
+            DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 28", () -> {
                 try (OutputStream outputStream = openFileOutput("issue28.xlsx", Context.MODE_PRIVATE)) {
                     TestIssue28.saveExcelFile(outputStream);
                 }
@@ -121,7 +123,7 @@ public class DocumentListActivity extends Activity
             }));
 
             // reproducer for https://github.com/centic9/poi-on-android/issues/75
-            DummyContent.addItem(new DummyItemWithCode("c2", "Test Issue 75 - Crashes!!", () -> {
+            DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 75 - Crashes!!", () -> {
                 try (InputStream pictureStream = openFileInput("logo.jpg");
                         OutputStream outputStream = openFileOutput("issue75.xlsx", Context.MODE_PRIVATE)) {
                     TestIssue75.saveExcelFile(pictureStream, outputStream);
@@ -131,7 +133,7 @@ public class DocumentListActivity extends Activity
             }));
 
             // reproducer for https://github.com/centic9/poi-on-android/issues/84
-            DummyContent.addItem(new DummyItemWithCode("c2", "Test Issue 84 - Crashes!!", () -> {
+            DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 84 - Crashes!!", () -> {
                 try (OutputStream outputStream = openFileOutput("issue84.xlsx", Context.MODE_PRIVATE)) {
                     TestIssue84.saveExcelFile(outputStream);
                 }
@@ -140,7 +142,7 @@ public class DocumentListActivity extends Activity
             }));
 
             // reproducer for https://github.com/centic9/poi-on-android/issues/89
-            DummyContent.addItem(new DummyItemWithCode("c2", "Test Issue 89 - Crashes!!", () -> {
+            DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 89 - Crashes!!", () -> {
                 try (OutputStream outputStream = openFileOutput("issue89.xlsx", Context.MODE_PRIVATE)) {
                     TestIssue89.saveExcelFile(outputStream);
                 }
@@ -172,7 +174,7 @@ public class DocumentListActivity extends Activity
 
                     int sheetCount = doc.getProperties().getExtendedProperties().getPages();
 
-                    DummyContent.addItem(new DummyItemWithCode("c4", "SheetCount " + sheetCount,
+                    DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "SheetCount " + sheetCount,
                             () -> "Called"));
                 } finally {
                     doc.close();
@@ -182,7 +184,7 @@ public class DocumentListActivity extends Activity
             try (InputStream slidesFile = getResources().openRawResource(R.raw.sample)) {
                 try (XMLSlideShow slides = new XMLSlideShow(slidesFile)) {
                     for (XSLFSlide slide : slides.getSlides()) {
-                        DummyContent.addItem(new DummyItemWithCode("c4",
+                        DummyContent.addItem(new DummyItemWithCode("c" + (idCount++),
                                 "Slide - " + slide.getSlideName(),
                                 slide::getTitle));
                     }
@@ -192,7 +194,7 @@ public class DocumentListActivity extends Activity
             try (InputStream slidesFile = getResources().openRawResource(R.raw.sample2)) {
                 try (HSLFSlideShow slides = new HSLFSlideShow(slidesFile)) {
                     for (HSLFSlide slide : slides.getSlides()) {
-                        DummyContent.addItem(new DummyItemWithCode("c4",
+                        DummyContent.addItem(new DummyItemWithCode("c" + (idCount++),
                                 "Slide - " + slide.getSlideName(),
                                 slide::getTitle));
                     }
