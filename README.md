@@ -13,7 +13,7 @@ It consists of two projects:
   that usually hinder you deploying Apache POI on
   Android
 * poitest: A very small sample Android application
-  which performs some actions on an XLSX-file using
+  which performs some actions on XLSX-, PPTX and DOCX-files using
   Apache POI. See `DocumentListActivity` for the actual
   code
 
@@ -31,13 +31,13 @@ application (let me know if you know of a better way to do this, see issue #10)
 
 ##### Supported Android versions
 
-The sample project uses API level 26, which maps to Android 8.0. Higher versions should work as well, 
-older ones might not be supported any more.
+The sample project uses minimum SDK version 26, which maps to Android 8.0. Higher versions should work as well, 
+older ones are likely not supported any more.
 
 ##### Dependencies
 
-Note: The dependencies of Apache POI are not included in the shading to keep it's size at bay. If you use code
-areas which require commons-codec, commons-collections4 or any of the other dependencies, you will need to define
+Note: Some dependencies of Apache POI are not included in the shading to keep it's size at bay. If you use code
+areas which require commons-codec, commons-collections4 or any of the other dependencies, you may need to add
 them in your Android application in addition to the poishadow-all.jar file dependency.
 
 ##### Use a pre-built jar
