@@ -77,7 +77,7 @@ public class DocumentListActivity extends Activity
         System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
 
         try {
-            writeWorkbook();
+            writeWorkbook("test.xlsx");
 
             int i = 0;
             InputStream input = openFileInput("test.xlsx");
@@ -124,7 +124,7 @@ public class DocumentListActivity extends Activity
 
             // reproducer for https://github.com/centic9/poi-on-android/issues/75
             DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 75 - Crashes!!", () -> {
-                try (InputStream pictureStream = openFileInput("logo.jpg");
+                try (InputStream pictureStream = getResources().openRawResource(R.raw.logo);
                         OutputStream outputStream = openFileOutput("issue75.xlsx", Context.MODE_PRIVATE)) {
                     TestIssue75.saveExcelFile(pictureStream, outputStream);
                 }
@@ -221,7 +221,7 @@ public class DocumentListActivity extends Activity
         // TODO: If exposing deep links into your app, handle intents here.
     }
 
-    private void writeWorkbook() throws java.io.IOException {
+    private void writeWorkbook(String name) throws java.io.IOException {
         try (Workbook wb = new XSSFWorkbook()) {
             Sheet sheet = wb.createSheet("Sheet1");
             Row row = sheet.createRow(0);
@@ -245,7 +245,7 @@ public class DocumentListActivity extends Activity
 
             sheet.setPrintGridlines(true);
 
-            try (OutputStream stream = openFileOutput("test.xlsx", Context.MODE_PRIVATE)) {
+            try (OutputStream stream = openFileOutput(name, Context.MODE_PRIVATE)) {
                 wb.write(stream);
             }
         }
