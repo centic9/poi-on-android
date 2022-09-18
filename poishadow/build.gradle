@@ -11,15 +11,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.apache.poi:poi-ooxml:5.2.2'
-    implementation 'org.apache.poi:poi-scratchpad:5.2.2'
-    // force newer xmlbeans
-    implementation 'org.apache.xmlbeans:xmlbeans:5.1.1'
-
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
+    implementation 'org.apache.poi:poi-scratchpad:5.2.3'
 
     implementation 'com.fasterxml:aalto-xml:1.3.0'
     implementation 'stax:stax-api:1.0.1'
-    implementation 'org.apache.logging.log4j:log4j-api:2.18.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
 }
 
 shadowJar {
