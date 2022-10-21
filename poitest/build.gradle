@@ -79,4 +79,5 @@ android {
     lint {
         abortOnError false
     }
+    namespace 'org.dstadler.poiandroidtest.poitest'
 }
