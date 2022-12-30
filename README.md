@@ -14,7 +14,7 @@ It consists of two projects:
   Android
 * poitest: A very small sample Android application
   which performs some actions on XLSX-, PPTX and DOCX-files using
-  Apache POI. See `DocumentListActivity` for the actual
+  Apache POI. See `MainActivity` for the actual
   code
 
 #### Getting started
@@ -39,6 +39,15 @@ older ones are likely not supported any more.
 Note: Some dependencies of Apache POI are not included in the shading to keep it's size at bay. If you use code
 areas which require commons-codec, commons-collections4 or any of the other dependencies, you may need to add
 them in your Android application in addition to the poishadow-all.jar file dependency.
+
+##### Missing java.awt classes
+
+Unfortunately Android does not provide any of the classes in package `java.awt` and 
+thus any code which uses code from there will not work. This affects various places
+in Apache POI, e.g. when handling column-width, images or other graphical operations.
+
+A few classes have been re-implemented in the src-folder in project `poishadow`. If you
+are missing some you might be able to add re-implementations there.
 
 ##### Use a pre-built jar
 
@@ -116,9 +125,8 @@ Install the apk
 #### Todo
 
 * Add more actual functionality to the sample application,
-  currently it just creates a new spreadsheet, adds some data
-  then stores it in the Application storage area and reads it
-  again from there.
+  currently it just performs some basic functionality on
+  documents.
 * Some parts of the JDK are missing on Android, e.g. AWT-related classes.
   Some of these are missing when some functionality of Apache POI
   is used and thus currently crash the sample project. 

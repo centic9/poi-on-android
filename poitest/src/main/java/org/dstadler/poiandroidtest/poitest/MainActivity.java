@@ -60,13 +60,16 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		// set some system-properties to instruct the code to use the fasterxml parsers
 		System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl");
 		System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
 		System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
 
 		try {
+			// create all the list items
 			setupContent();
 
+			// populate the list
 			final ListView listview = (ListView) findViewById(R.id.mylist);
 			final ArrayList<String> list = new ArrayList<>();
 			for (DummyContent.DummyItem item : DummyContent.ITEMS) {
@@ -78,10 +81,8 @@ public class MainActivity extends Activity {
 			listview.setAdapter(adapter);
 
 			listview.setOnItemClickListener((parent, view, position, id) -> {
-				//final String item = (String) parent.getItemAtPosition(position);
-
+				// when an item is clicked, show a message-box with the resulting content
 				DummyContent.DummyItem content = DummyContent.ITEMS.get(position);
-
 				MessageBox box = new MessageBox(view.getContext());
 				box.show(content.toString(), content.getLongContent());
 			});
@@ -91,16 +92,14 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	public static class MessageBox
-	{
+	public static class MessageBox {
 		final Context context;
 
 		public MessageBox(Context context) {
 			this.context = context;
 		}
 
-		void show(String title, String message)
-		{
+		void show(String title, String message) {
 			dialog = new AlertDialog.Builder(context) // Pass a reference to your main activity here
 					.setTitle(title)
 					.setMessage(message)
@@ -112,8 +111,6 @@ public class MainActivity extends Activity {
 	}
 
 	private static class StableArrayAdapter extends ArrayAdapter<String> {
-
-
 		HashMap<String, Integer> mIdMap = new HashMap<>();
 
 		public StableArrayAdapter(Context context, int textViewResourceId,
@@ -134,7 +131,6 @@ public class MainActivity extends Activity {
 		public boolean hasStableIds() {
 			return true;
 		}
-
 	}
 
 	private void writeWorkbook(String name) throws java.io.IOException {
@@ -310,6 +306,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	// Copied from Apache POI Utils class to not require code from java.awt
 	public static int toEMU(double points) {
 		return (int)Math.rint(12700.0D * points);
 	}
@@ -347,7 +344,6 @@ public class MainActivity extends Activity {
 				} catch (Exception e) {
 					throw new IllegalStateException(e);
 				}
-
 			}
 		}
 	}
