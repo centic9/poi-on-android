@@ -2,13 +2,8 @@ package org.dstadler.poiandroidtest.poitest;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.ContextParams;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -49,8 +44,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.fragment.app.DialogFragment;
-
 public class MainActivity extends Activity {
 	private int idCount = 0;
 
@@ -67,17 +60,6 @@ public class MainActivity extends Activity {
 			setupContent();
 
 			final ListView listview = (ListView) findViewById(R.id.mylist);
-			/*String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-					"Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-					"Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-					"OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-					"Android", "iPhone", "WindowsMobile" };
-
-
-			for (int i = 0; i < values.length; ++i) {
-				list.add(values[i]);
-			}*/
-
 			final ArrayList<String> list = new ArrayList<>();
 			for (DummyContent.DummyItem item : DummyContent.ITEMS) {
 				list.add(item.toString());
@@ -87,47 +69,13 @@ public class MainActivity extends Activity {
 					android.R.layout.simple_list_item_1, list);
 			listview.setAdapter(adapter);
 
-			listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			listview.setOnItemClickListener((parent, view, position, id) -> {
+				//final String item = (String) parent.getItemAtPosition(position);
 
-				@Override
-				public void onItemClick(AdapterView<?> parent, final View view,
-										int position, long id) {
-					//final String item = (String) parent.getItemAtPosition(position);
+				DummyContent.DummyItem content = DummyContent.ITEMS.get(position);
 
-					DummyContent.DummyItem content = DummyContent.ITEMS.get(position);
-
-					AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(view.getContext());
-					dlgAlert.setMessage(content.getLongContent());
-					dlgAlert.setTitle(content.toString());
-					dlgAlert.setPositiveButton("OK", null);
-					dlgAlert.setCancelable(true);
-					dlgAlert.setPositiveButton("Ok",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int which) {
-									// You don't have to do anything here if you just
-									// want it dismissed when clicked
-								}
-							});
-					dlgAlert.create().show();
-
-					/*MessageBox box = new MessageBox(getApplication());
-					box.show(content.toString(), content.getLongContent());*/
-
-					/*DialogFragment dialog = new MyDialogFragment(content);
-					dialog.show(dialog.getFragmentManager(), "MyDialogFragmentTag");*/
-
-
-					/*view.animate().setDuration(2000).alpha(0)
-							.withEndAction(new Runnable() {
-								@Override
-								public void run() {
-									list.remove(item);
-									adapter.notifyDataSetChanged();
-									view.setAlpha(1);
-								}
-							});*/
-				}
-
+				MessageBox box = new MessageBox(view.getContext());
+				box.show(content.toString(), content.getLongContent());
 			});
 
 		} catch (Exception e) {
@@ -135,9 +83,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-
-
-	public class MessageBox
+	public static class MessageBox
 	{
 		final Context context;
 
@@ -150,50 +96,17 @@ public class MainActivity extends Activity {
 			dialog = new AlertDialog.Builder(context) // Pass a reference to your main activity here
 					.setTitle(title)
 					.setMessage(message)
-					.setPositiveButton("OK", new DialogInterface.OnClickListener()
-					{
-						@Override
-						public void onClick(DialogInterface dialogInterface, int i)
-						{
-							dialog.cancel();
-						}
-					})
+					.setPositiveButton("OK", (dialogInterface, i) -> dialog.cancel())
 					.show();
 		}
 
 		private AlertDialog dialog;
 	}
 
-	public class MyDialogFragment extends DialogFragment {
-		private final DummyContent.DummyItem item;
-
-		public MyDialogFragment(DummyContent.DummyItem item) {
-			this.item = item;
-		}
-
-		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-			// Use the Builder class for convenient dialog construction
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setTitle(item.toString());
-			builder.setMessage(item.getLongContent());
-			builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					// You don't have to do anything here if you just
-					// want it dismissed when clicked
-				}
-			});
-
-			// Create the AlertDialog object and return it
-			return builder.create();
-		}
-	}
-
-	private class StableArrayAdapter extends ArrayAdapter<String> {
+	private static class StableArrayAdapter extends ArrayAdapter<String> {
 
 
-		HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+		HashMap<String, Integer> mIdMap = new HashMap<>();
 
 		public StableArrayAdapter(Context context, int textViewResourceId,
 				List<String> objects) {
