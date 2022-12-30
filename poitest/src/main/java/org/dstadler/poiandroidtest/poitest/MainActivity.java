@@ -3,7 +3,10 @@ package org.dstadler.poiandroidtest.poitest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -25,6 +28,8 @@ import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.BreakType;
+import org.apache.poi.xwpf.usermodel.Document;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -45,6 +50,9 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends Activity {
+	// Request code for creating a PDF document.
+	private static final int CREATE_DOCX_FILE = 2;
+
 	private int idCount = 0;
 
 	@Override
@@ -188,6 +196,23 @@ public class MainActivity extends Activity {
 		DummyContent.addItem(new DummyItemWithCode("v" + (idCount++), "POI Version",
 				() -> "Apache " + Version.getProduct() + " " + Version.getVersion() + " (" + Version.getReleaseDate() + ")"));
 
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++),
+				"DOCX with image",
+				() -> {
+					Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+					intent.addCategory(Intent.CATEGORY_OPENABLE);
+					intent.setType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+					intent.putExtra(Intent.EXTRA_TITLE, "DocWithImage.docx");
+
+					// Optionally, specify a URI for the directory that should be opened in
+					// the system file picker when your app creates the document.
+					//intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, "DocWithImage.docx");
+
+					startActivityForResult(intent, CREATE_DOCX_FILE);
+
+					return "Writing to selected file";
+				}));
+
 		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Callable",
 				() -> "This is the result from the callable"));
 
@@ -281,6 +306,48 @@ public class MainActivity extends Activity {
 							"Slide - " + slide.getSlideName(),
 							slide::getTitle));
 				}
+			}
+		}
+	}
+
+	public static int toEMU(double points) {
+		return (int)Math.rint(12700.0D * points);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+		if (requestCode == CREATE_DOCX_FILE
+				&& resultCode == Activity.RESULT_OK) {
+			// The result data contains a URI for the document or directory that
+			// the user selected.
+			if (resultData != null) {
+				Uri uri = resultData.getData();
+				// Perform operations on the document using its URI.
+
+				try (InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum)) {
+					XWPFDocument doc = new XWPFDocument(docFile);
+
+					try (InputStream pictureStream = getResources().openRawResource(R.raw.logo)) {
+						XWPFParagraph p = doc.createParagraph();
+
+						XWPFRun r = p.createRun();
+						r.setText("logo.jpg");
+						r.addBreak();
+						r.addPicture(pictureStream, Document.PICTURE_TYPE_JPEG,
+								"logo.jpg", toEMU(200),
+								toEMU(200)); // 200x200 pixels
+						r.addBreak(BreakType.PAGE);
+					}
+
+					try (ParcelFileDescriptor docx = getContentResolver().openFileDescriptor(uri, "w")) {
+						try (OutputStream outputStream = new FileOutputStream(docx.getFileDescriptor())) {
+							doc.write(outputStream);
+						}
+					}
+				} catch (Exception e) {
+					throw new IllegalStateException(e);
+				}
+
 			}
 		}
 	}
