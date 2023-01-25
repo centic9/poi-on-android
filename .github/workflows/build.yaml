@@ -1,4 +1,4 @@
-name: Build
+name: Build and check
 on: [pull_request, push]
 jobs:
   build:
