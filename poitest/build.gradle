@@ -70,10 +70,22 @@ android {
     }
     packagingOptions {
         resources {
-            pickFirsts += ['META-INF/DEPENDENCIES.txt', 'META-INF/LICENSE.txt', 'META-INF/NOTICE.txt', 'META-INF/NOTICE', 'META-INF/LICENSE', 'META-INF/DEPENDENCIES', 'META-INF/notice.txt', 'META-INF/license.txt', 'META-INF/dependencies.txt', 'META-INF/LGPL2.1']
+            pickFirsts += [
+                    'META-INF/DEPENDENCIES.txt',
+                    'META-INF/LICENSE.txt',
+                    'META-INF/LICENSE.md',
+                    'META-INF/LICENSE-notice.md',
+                    'META-INF/NOTICE.txt',
+                    'META-INF/NOTICE',
+                    'META-INF/LICENSE',
+                    'META-INF/DEPENDENCIES',
+                    'META-INF/notice.txt',
+                    'META-INF/license.txt',
+                    'META-INF/dependencies.txt',
+                    'META-INF/LGPL2.1'
+            ]
         }
     }
-
 
     // error about duplicates if some of these are not excluded
     lint {
