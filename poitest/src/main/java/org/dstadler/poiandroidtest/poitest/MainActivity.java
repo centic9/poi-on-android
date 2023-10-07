@@ -190,7 +190,7 @@ public class MainActivity extends Activity {
 		}
 
 		DummyContent.addItem(new DummyItemWithCode("v" + (idCount++), "POI Version",
-				() -> "Apache " + Version.getProduct() + " " + Version.getVersion() + " (" + Version.getReleaseDate() + ")"));
+				() -> "Apache " + Version.getProduct() + " " + Version.getVersion()));
 
 		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++),
 				"DOCX with image",
