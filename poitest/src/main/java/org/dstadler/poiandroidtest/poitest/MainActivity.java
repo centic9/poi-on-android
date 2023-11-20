@@ -49,9 +49,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
+import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
+
 public class MainActivity extends Activity {
 	// Request code for creating a PDF document.
 	private static final int CREATE_DOCX_FILE = 2;
+	private static final int CREATE_PDF_FILE = 3;
 
 	private int idCount = 0;
 
@@ -209,6 +213,23 @@ public class MainActivity extends Activity {
 					return "Writing to selected file";
 				}));
 
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++),
+				"DOCX to PDF",
+				() -> {
+					Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+					intent.addCategory(Intent.CATEGORY_OPENABLE);
+					intent.setType("application/pdf");
+					intent.putExtra(Intent.EXTRA_TITLE, "DocWithImage.pdf");
+
+					// Optionally, specify a URI for the directory that should be opened in
+					// the system file picker when your app creates the document.
+					//intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, "DocWithImage.docx");
+
+					startActivityForResult(intent, CREATE_PDF_FILE);
+
+					return "Writing to selected file";
+				}));
+
 		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Callable",
 				() -> "This is the result from the callable"));
 
@@ -339,6 +360,38 @@ public class MainActivity extends Activity {
 					try (ParcelFileDescriptor docx = getContentResolver().openFileDescriptor(uri, "w")) {
 						try (OutputStream outputStream = new FileOutputStream(docx.getFileDescriptor())) {
 							doc.write(outputStream);
+						}
+					}
+				} catch (Exception e) {
+					throw new IllegalStateException(e);
+				}
+			}
+		} else if (requestCode == CREATE_PDF_FILE
+				&& resultCode == Activity.RESULT_OK) {
+			// The result data contains a URI for the document or directory that
+			// the user selected.
+			if (resultData != null) {
+				Uri uri = resultData.getData();
+				// Perform operations on the document using its URI.
+
+				try (InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum)) {
+					XWPFDocument doc = new XWPFDocument(docFile);
+
+					try (InputStream pictureStream = getResources().openRawResource(R.raw.logo)) {
+						XWPFParagraph p = doc.createParagraph();
+
+						XWPFRun r = p.createRun();
+						r.setText("logo.jpg");
+						r.addBreak();
+						r.addPicture(pictureStream, Document.PICTURE_TYPE_JPEG,
+								"logo.jpg", toEMU(200),
+								toEMU(200)); // 200x200 pixels
+						r.addBreak(BreakType.PAGE);
+					}
+
+					try (ParcelFileDescriptor pdf = getContentResolver().openFileDescriptor(uri, "w")) {
+						try (OutputStream outputStream = new FileOutputStream(pdf.getFileDescriptor())) {
+							new PdfConverter().convert(doc, outputStream, PdfOptions.create());
 						}
 					}
 				} catch (Exception e) {
