@@ -1,2 +1,16 @@
+pluginManagement {
+    buildscript {
+        repositories {
+            mavenCentral()
+            maven {
+                url = uri("https://maven.google.com")
+            }
+        }
+        dependencies {
+            classpath("com.android.tools:r8:8.2.33")
+        }
+    }
+}
+
 include ':poitest'
 include ':poishadow'
