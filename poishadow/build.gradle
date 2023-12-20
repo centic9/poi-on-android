@@ -45,6 +45,10 @@ shadowJar {
     // java.awt is not available, but class Color is used in APIs in POI, therefore
     // relocate this class to another one where we can include a rewrite
     relocate 'java.awt.Color', 'org.apache.poi.java.awt.Color'
+
+    relocate 'java.awt.geom.Dimension2D', 'org.apache.poi.java.awt.geom.Dimension2D'
+    relocate 'java.awt.Dimension', 'org.apache.poi.java.awt.Dimension'
+    relocate 'ss.util.ImageUtils', 'org.apache.poi.ss.util.ImageUtils'
 }
 
 jar.dependsOn shadowJar
