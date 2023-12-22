@@ -3,12 +3,9 @@ package org.dstadler.compat;
 import org.apache.poi.java.awt.image.BufferedImage;
 import org.apache.poi.javax.imageio.ImageReader;
 import org.apache.poi.javax.imageio.metadata.IIOMetadata;
-import org.apache.poi.util.Units;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.nio.ByteOrder;
-import java.util.Arrays;
 import java.util.OptionalInt;
 
 
@@ -30,17 +27,7 @@ public class PngReader extends ImageReader {
 
     @Override
     protected boolean canRead(BufferedInputStream inputStream) {
-        byte[] bytes = new byte[PNG_MAGIC_BYTES.length];
-        inputStream.mark(PNG_MAGIC_BYTES.length);
-
-        try {
-            inputStream.read(bytes, 0, PNG_MAGIC_BYTES.length);
-            inputStream.reset();
-        } catch (IOException e) {
-            return false;
-        }
-
-        return Arrays.equals(bytes, PNG_MAGIC_BYTES);
+        return magicBytesPresent(PNG_MAGIC_BYTES, inputStream);
     }
 
     @Override
@@ -67,6 +54,7 @@ public class PngReader extends ImageReader {
             }
         }
 
+        buffer.rewind();
         Float horizontal = ppuX == 0 ? null : 1000.0F / ppuX;
         Float vertical = ppuY == 0 ? null : 1000.0F / ppuY;
         return new IOMetadataImpl(horizontal, vertical);

@@ -1,11 +1,10 @@
 package org.dstadler.compat;
 
+import org.apache.poi.javax.imageio.stream.ImageInputStream;
+
 import java.io.BufferedInputStream;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.poi.javax.imageio.stream.ImageInputStream;
 
 public class ImageInputStreamImpl implements ImageInputStream {
     private final BufferedInputStream stream;

@@ -8,9 +8,12 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.OptionalInt;
 
-import javax.imageio.metadata.IIOMetadataNode;
-
 public class JpgReader extends ImageReader {
+    private static final byte[] JFIF_MAGIC_BYTES = new byte[]{(byte) 0xFF, (byte) 0xD8,
+            (byte) 0xFF, (byte) 0xE0};
+    private static final byte[] EXIF_MAGIC_BYTES = new byte[]{(byte) 0xFF, (byte) 0xD8,
+            (byte) 0xFF, (byte) 0xE1};
+
     @Override
     public BufferedImage read(int imageIndex) {
         //Start Of Frame (Baseline DCT), SOFn segment
@@ -29,7 +32,8 @@ public class JpgReader extends ImageReader {
 
     @Override
     protected boolean canRead(BufferedInputStream inputStream) {
-        return false;
+        return magicBytesPresent(JFIF_MAGIC_BYTES, inputStream)
+                || magicBytesPresent(EXIF_MAGIC_BYTES, inputStream);
     }
 
     @Override
@@ -55,6 +59,8 @@ public class JpgReader extends ImageReader {
                 vertical = scale / yDensity;
             }
         }
+
+        buffer.rewind();
         return new IOMetadataImpl(horizontal, vertical);
     }
 }

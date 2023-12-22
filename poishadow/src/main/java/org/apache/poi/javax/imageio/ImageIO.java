@@ -1,24 +1,26 @@
 package org.apache.poi.javax.imageio;
 
 
-
-
+import org.apache.poi.javax.imageio.stream.ImageInputStream;
+import org.dstadler.compat.BmpReader;
 import org.dstadler.compat.ImageInputStreamImpl;
+import org.dstadler.compat.JpgReader;
 import org.dstadler.compat.PngReader;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.poi.javax.imageio.stream.ImageInputStream;
 
 public final class ImageIO {
     private static final List<org.apache.poi.javax.imageio.ImageReader> imageReaders = new ArrayList<>();
 
     static {
         imageReaders.add(new PngReader());
+        imageReaders.add(new JpgReader());
+        imageReaders.add(new BmpReader());
     }
 
     public static ImageInputStream createImageInputStream(Object input) throws IOException {
@@ -33,7 +35,15 @@ public final class ImageIO {
             throw new IllegalArgumentException("input is not an instance of ImageInputStream");
         }
 
-        return new ArrayList<>(imageReaders).iterator();
+        for(ImageReader reader : imageReaders){
+            if (reader.canRead(((ImageInputStream) input).getInputStream())){
+                ArrayList<ImageReader> returnList = new ArrayList<>();
+                returnList.add(reader);
+                return returnList.iterator();
+            }
+        }
+
+        return Collections.emptyIterator();
     }
 
 

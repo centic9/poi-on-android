@@ -13,6 +13,8 @@ import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
 public abstract class ImageReader {
+
+
     protected ByteBuffer buffer;
 
     public void setInput(Object input) {
@@ -62,6 +64,20 @@ public abstract class ImageReader {
         return IntStream.rangeClosed(buf.position(), buf.limit() - b.length)
                 .filter(i -> IntStream.range(0, b.length).allMatch(j -> buf.get(i + j) == b[j]))
                 .toArray();
+    }
+
+    protected boolean magicBytesPresent(byte[] magic, BufferedInputStream inputStream){
+        byte[] bytes = new byte[magic.length];
+        inputStream.mark(magic.length);
+
+        try {
+            inputStream.read(bytes, 0, magic.length);
+            inputStream.reset();
+        } catch (IOException e) {
+            return false;
+        }
+
+        return Arrays.equals(bytes, magic);
     }
 
     public abstract BufferedImage read(int imageIndex);
