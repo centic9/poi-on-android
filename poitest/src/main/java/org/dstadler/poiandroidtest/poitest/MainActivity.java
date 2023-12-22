@@ -230,10 +230,28 @@ public class MainActivity extends Activity {
 		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 75 - Crashes!!", () -> {
 			try (InputStream pictureStream = getResources().openRawResource(R.raw.logo);
 				 OutputStream outputStream = openFileOutput("issue75.xlsx", Context.MODE_PRIVATE)) {
-				TestIssue75.saveExcelFile(pictureStream, outputStream);
+				TestIssue75.saveExcelFile(pictureStream, outputStream, Workbook.PICTURE_TYPE_JPEG);
 			}
 
-			return "Issue 75 - XMLSlideShow constructed successfully";
+			return "Issue 75 - XSSFWorkbook constructed successfully";
+		}));
+
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test resizing PNG file", () -> {
+			try (InputStream pictureStream = getResources().openRawResource(R.raw.logo_png);
+				 OutputStream outputStream = openFileOutput("resizePng.xlsx", Context.MODE_PRIVATE)) {
+				TestIssue75.saveExcelFile(pictureStream, outputStream, Workbook.PICTURE_TYPE_PNG);
+			}
+
+			return "Test resizing PNG file - XSSFWorkbook constructed successfully";
+		}));
+
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test resizing BMP file", () -> {
+			try (InputStream pictureStream = getResources().openRawResource(R.raw.logo_bmp);
+				 OutputStream outputStream = openFileOutput("resizeBmp.xlsx", Context.MODE_PRIVATE)) {
+				TestIssue75.saveExcelFile(pictureStream, outputStream, Workbook.PICTURE_TYPE_DIB);
+			}
+
+			return "Test resizing BMP file - XSSFWorkbook constructed successfully";
 		}));
 
 		// reproducer for https://github.com/centic9/poi-on-android/issues/84

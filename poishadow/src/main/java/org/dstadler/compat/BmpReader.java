@@ -8,9 +8,18 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.nio.ByteOrder;
 
+/**
+ * Image reader for BMP files.
+ */
 public class BmpReader extends ImageReader {
+    /**
+     * The BMP's magic bytes
+     */
     private static final byte[] BMP_MAGIC_BYTES = new byte[]{0x42, 0x4D};
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BufferedImage read(int imageIndex) {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -24,13 +33,20 @@ public class BmpReader extends ImageReader {
         return new BufferedImage(width, height);
     }
 
+    /**
+     * Specific for BMP image files.<p>
+     * {@inheritDoc}
+     */
     @Override
     protected boolean canRead(BufferedInputStream inputStream) {
         return magicBytesPresent(BMP_MAGIC_BYTES, inputStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public IIOMetadata getImageMetadata(int var1) throws IOException {
+    public IIOMetadata getImageMetadata(int imageIndex) throws IOException {
         buffer.order(ByteOrder.LITTLE_ENDIAN);
 
         //set to XpixelsPerM offset which is followed by YpixelsPerM

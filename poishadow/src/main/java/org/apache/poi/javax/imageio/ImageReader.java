@@ -12,11 +12,21 @@ import java.util.Arrays;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
+/**
+ * Shadow class for {@link javax.imageio.ImageReader}. Adds some compatibility to systems that do
+ * not have access to javax.imageio.
+ */
 public abstract class ImageReader {
-
-
+    /**
+     * The buffer used when reading.
+     */
     protected ByteBuffer buffer;
 
+    /**
+     * Sets the input stream.
+     *
+     * @param input Must be a {@link ImageInputStream}.
+     */
     public void setInput(Object input) {
         if (!(input instanceof ImageInputStream)) {
             throw new IllegalArgumentException("input is not an instance of InputStream");
@@ -66,7 +76,14 @@ public abstract class ImageReader {
                 .toArray();
     }
 
-    protected boolean magicBytesPresent(byte[] magic, BufferedInputStream inputStream){
+    /**
+     * Returns true if the magic bytes given match the same starting bytes in the given inputStream.
+     *
+     * @param magic       the magic bytes to match.
+     * @param inputStream The input stream to use.
+     * @return true if the magic bytes given match the same starting bytes in the given inputStream.
+     */
+    protected boolean magicBytesPresent(byte[] magic, BufferedInputStream inputStream) {
         byte[] bytes = new byte[magic.length];
         inputStream.mark(magic.length);
 
@@ -80,12 +97,34 @@ public abstract class ImageReader {
         return Arrays.equals(bytes, magic);
     }
 
+    /**
+     * Returns a {@link BufferedImage} by reading the buffer.
+     *
+     * @param imageIndex this is ignored.
+     * @return a {@link BufferedImage} by reading the buffer.
+     */
     public abstract BufferedImage read(int imageIndex);
-    
+
+    /**
+     * Returns true if the inherited class can read this input stream as a specific image.
+     *
+     * @param inputStream The input stream to use.
+     * @return true if the inherited class can read this input stream as a specific image.
+     */
     protected abstract boolean canRead(BufferedInputStream inputStream);
 
-    public abstract IIOMetadata getImageMetadata(int var1) throws IOException;
+    /**
+     * Returns a {@link IIOMetadata} by reading the buffer.
+     *
+     * @param imageIndex ignored.
+     * @return a {@link IIOMetadata} by reading the buffer.
+     * @throws IOException If an error occurs during reading.
+     */
+    public abstract IIOMetadata getImageMetadata(int imageIndex) throws IOException;
 
+    /**
+     * Disposes of any used resources.
+     */
     public void dispose() {
         buffer = null;
     }

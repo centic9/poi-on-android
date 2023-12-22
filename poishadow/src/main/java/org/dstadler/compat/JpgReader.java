@@ -8,12 +8,25 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.OptionalInt;
 
+/**
+ * Image reader for JPG files.
+ */
 public class JpgReader extends ImageReader {
+    /**
+     * Magic bytes for JFIF JPG files.
+     */
     private static final byte[] JFIF_MAGIC_BYTES = new byte[]{(byte) 0xFF, (byte) 0xD8,
             (byte) 0xFF, (byte) 0xE0};
+
+    /**
+     * Magic bytes for EXIF JPG files.
+     */
     private static final byte[] EXIF_MAGIC_BYTES = new byte[]{(byte) 0xFF, (byte) 0xD8,
             (byte) 0xFF, (byte) 0xE1};
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BufferedImage read(int imageIndex) {
         //Start Of Frame (Baseline DCT), SOFn segment
@@ -30,12 +43,19 @@ public class JpgReader extends ImageReader {
         return new BufferedImage(width, height);
     }
 
+    /**
+     * Specific for JPG image files.<p>
+     * {@inheritDoc}
+     */
     @Override
     protected boolean canRead(BufferedInputStream inputStream) {
         return magicBytesPresent(JFIF_MAGIC_BYTES, inputStream)
                 || magicBytesPresent(EXIF_MAGIC_BYTES, inputStream);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IIOMetadata getImageMetadata(int var1) throws IOException {
         //JFIF extension APP0 segment
@@ -50,8 +70,7 @@ public class JpgReader extends ImageReader {
             int xDensity = buffer.getShort();
             int yDensity = buffer.getShort();
 
-
-            // Pixel size
+            // Pixel sizes
             if (unit != 0) {
                 // 1 == dpi, 2 == dpc
                 float scale = (unit == 1) ? 25.4F : 10.0F;
