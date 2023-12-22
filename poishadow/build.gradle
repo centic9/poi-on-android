@@ -51,6 +51,7 @@ shadowJar {
     relocate 'javax.imageio.ImageIO', 'org.apache.poi.javax.imageio.ImageIO'
     relocate 'javax.imageio.ImageReader', 'org.apache.poi.javax.imageio.ImageReader'
     relocate 'javax.imageio.stream.ImageInputStream', 'org.apache.poi.javax.imageio.stream.ImageInputStream'
+    relocate 'javax.imageio.metadata.IIOMetadata', 'org.apache.poi.javax.imageio.metadata.IIOMetadata'
 }
 
 jar.dependsOn shadowJar

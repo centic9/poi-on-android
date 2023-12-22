@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 import org.apache.poi.javax.imageio.stream.ImageInputStream;
 
-public class ImageInputStreamImpl implements ImageInputStream, Closeable {
+public class ImageInputStreamImpl implements ImageInputStream {
     private final BufferedInputStream stream;
 
     public ImageInputStreamImpl(InputStream inputStream){

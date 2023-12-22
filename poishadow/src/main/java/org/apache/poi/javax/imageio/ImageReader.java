@@ -1,18 +1,16 @@
 package org.apache.poi.javax.imageio;
 
 import org.apache.commons.io.IOUtils;
-
+import org.apache.poi.java.awt.image.BufferedImage;
+import org.apache.poi.javax.imageio.metadata.IIOMetadata;
+import org.apache.poi.javax.imageio.stream.ImageInputStream;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.OptionalInt;
 import java.util.stream.IntStream;
-
-import org.apache.poi.java.awt.image.BufferedImage;
-import org.apache.poi.javax.imageio.stream.ImageInputStream;
 
 public abstract class ImageReader {
     protected ByteBuffer buffer;
@@ -24,11 +22,7 @@ public abstract class ImageReader {
         ImageInputStream imageInputStream = (ImageInputStream) input;
 
         try {
-            byte[] bytes = new byte[magicBytes().length];
-            imageInputStream.getInputStream().mark(magicBytes().length);
-            imageInputStream.getInputStream().read(bytes, 0, magicBytes().length);
-            imageInputStream.getInputStream().reset();
-            if (!Arrays.equals(bytes, magicBytes())) {
+            if (!canRead(imageInputStream.getInputStream())) {
                 throw new IllegalArgumentException("Incorrect input type!");
             }
 
@@ -70,21 +64,13 @@ public abstract class ImageReader {
                 .toArray();
     }
 
-    /**
-     * Converts pixels per meter to dots per inch.
-     *
-     * @param pixelsPerMeters the pixels per meters to convert.
-     * @return the converted dots per inch value.
-     */
-    protected static int getDotsPerInch(int pixelsPerMeters) {
-        return Math.round((float) pixelsPerMeters / 39.370079f);
-    }
-
     public abstract BufferedImage read(int imageIndex);
+    
+    protected abstract boolean canRead(BufferedInputStream inputStream);
 
-    protected abstract byte[] magicBytes();
+    public abstract IIOMetadata getImageMetadata(int var1) throws IOException;
 
-    public void dispose(){
+    public void dispose() {
         buffer = null;
     }
 }
