@@ -1,6 +1,6 @@
 plugins {
     id 'java' // java plugin must be explicitly applied for shadow plugin
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -19,6 +19,12 @@ dependencies {
 }
 
 shadowJar {
+    // Apache POI uses service-files for Extractors, Renderers, ...
+    mergeServiceFiles {
+        // merging relocates some files, so exclude these as we want to keep them in place
+        exclude 'META-INF/services/javax.xml.stream.*'
+    }
+
     exclude 'repackage/**'
 
     exclude 'LICENSE.txt'

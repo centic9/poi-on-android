@@ -14,6 +14,8 @@ import org.apache.commons.io.output.CountingOutputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.Version;
 import org.apache.poi.common.usermodel.HyperlinkType;
+import org.apache.poi.extractor.ExtractorFactory;
+import org.apache.poi.extractor.POITextExtractor;
 import org.apache.poi.hslf.usermodel.HSLFSlide;
 import org.apache.poi.hslf.usermodel.HSLFSlideShow;
 import org.apache.poi.poifs.crypt.TestSignatureInfo;
@@ -271,6 +273,23 @@ public class MainActivity extends Activity {
 			}
 
 			return "Issue 89 - SXSSFWorkbook constructed successfully";
+		}));
+
+		// reproducer for https://github.com/centic9/poi-on-android/issues/98
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 98", () -> {
+			StringBuilder text = new StringBuilder();
+			for (int resource : new int[] {
+					R.raw.simple,
+					R.raw.sample,
+					R.raw.lorem_ipsum,
+			} ) {
+				try (InputStream pictureStream = getResources().openRawResource(resource);
+					 POITextExtractor extractor = ExtractorFactory.createExtractor(pictureStream)) {
+
+					text.append("\nResource-").append(resource).append(": ").append(extractor.getText());
+				}
+			}
+			return "Issue 98 - Had text: " + text;
 		}));
 
 		try (InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum)) {
