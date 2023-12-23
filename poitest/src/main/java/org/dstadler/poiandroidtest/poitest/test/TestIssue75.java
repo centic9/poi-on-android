@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class TestIssue75 {
-    public static void saveExcelFile(InputStream picture, OutputStream outputStream) throws IOException {
+    public static void saveExcelFile(InputStream picture, OutputStream outputStream, int workBookPictureType) throws IOException {
         XSSFWorkbook workbook = new XSSFWorkbook();
 
         XSSFCreationHelper helper = workbook.getCreationHelper();
@@ -24,7 +24,7 @@ public class TestIssue75 {
 
         XSSFClientAnchor anchor = helper.createClientAnchor();
         anchor.setAnchorType( ClientAnchor.AnchorType.MOVE_AND_RESIZE );
-        int pictureIndex = workbook.addPicture(IOUtils.toByteArray(picture), Workbook.PICTURE_TYPE_JPEG);
+        int pictureIndex = workbook.addPicture(IOUtils.toByteArray(picture), workBookPictureType);
 
         anchor.setCol1( 0 );
         anchor.setRow1( 2);
