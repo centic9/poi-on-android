@@ -10,6 +10,7 @@ import android.os.ParcelFileDescriptor;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.apache.commons.io.output.CountingOutputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.Version;
 import org.apache.poi.common.usermodel.HyperlinkType;
@@ -70,7 +71,7 @@ public class MainActivity extends Activity {
 			setupContent();
 
 			// populate the list
-			final ListView listview = (ListView) findViewById(R.id.mylist);
+			final ListView listview = findViewById(R.id.mylist);
 			final ArrayList<String> list = new ArrayList<>();
 			for (DummyContent.DummyItem item : DummyContent.ITEMS) {
 				list.add(item.toString());
@@ -227,31 +228,31 @@ public class MainActivity extends Activity {
 		}));
 
 		// reproducer for https://github.com/centic9/poi-on-android/issues/75
-		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 75 - Crashes!!", () -> {
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test resizing JPEG (#75)", () -> {
 			try (InputStream pictureStream = getResources().openRawResource(R.raw.logo);
-				 OutputStream outputStream = openFileOutput("issue75.xlsx", Context.MODE_PRIVATE)) {
+				 CountingOutputStream outputStream = new CountingOutputStream(openFileOutput("issue75.xlsx", Context.MODE_PRIVATE))) {
 				TestIssue75.saveExcelFile(pictureStream, outputStream, Workbook.PICTURE_TYPE_JPEG);
-			}
 
-			return "Issue 75 - XSSFWorkbook constructed successfully";
+				return "Issue 75 - XSSFWorkbook constructed successfully, wrote " + outputStream.getByteCount() + " bytes";
+			}
 		}));
 
-		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test resizing PNG file", () -> {
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test resizing PNG (#75)", () -> {
 			try (InputStream pictureStream = getResources().openRawResource(R.raw.logo_png);
-				 OutputStream outputStream = openFileOutput("resizePng.xlsx", Context.MODE_PRIVATE)) {
+				 CountingOutputStream outputStream = new CountingOutputStream(openFileOutput("resizePng.xlsx", Context.MODE_PRIVATE))) {
 				TestIssue75.saveExcelFile(pictureStream, outputStream, Workbook.PICTURE_TYPE_PNG);
-			}
 
-			return "Test resizing PNG file - XSSFWorkbook constructed successfully";
+				return "Test resizing PNG file - XSSFWorkbook constructed successfully, wrote " + outputStream.getByteCount() + " bytes";
+			}
 		}));
 
-		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test resizing BMP file", () -> {
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test resizing BMP (#75)", () -> {
 			try (InputStream pictureStream = getResources().openRawResource(R.raw.logo_bmp);
-				 OutputStream outputStream = openFileOutput("resizeBmp.xlsx", Context.MODE_PRIVATE)) {
+				 CountingOutputStream outputStream = new CountingOutputStream(openFileOutput("resizeBmp.xlsx", Context.MODE_PRIVATE))) {
 				TestIssue75.saveExcelFile(pictureStream, outputStream, Workbook.PICTURE_TYPE_DIB);
-			}
 
-			return "Test resizing BMP file - XSSFWorkbook constructed successfully";
+				return "Test resizing BMP file - XSSFWorkbook constructed successfully, wrote " + outputStream.getByteCount() + " bytes";
+			}
 		}));
 
 		// reproducer for https://github.com/centic9/poi-on-android/issues/84
