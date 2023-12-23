@@ -11,11 +11,10 @@ import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
 public class TestIssue89 {
-    public static void saveExcelFile(OutputStream outputStream) throws IOException {
+    public static void saveExcelFile(OutputStream outputStream) {
         try (Workbook wb1 = new SXSSFWorkbook(100)) {
             Sheet sheet = wb1.createSheet("Sheet1");
             Row row1 = sheet.createRow(0);

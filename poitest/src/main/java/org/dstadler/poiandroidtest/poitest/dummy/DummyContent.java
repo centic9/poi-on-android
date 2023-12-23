@@ -15,7 +15,7 @@ public class DummyContent {
     /**
      * An array of sample (dummy) items.
      */
-    public static List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public static List<DummyItem> ITEMS = new ArrayList<>();
 
     /**
      * A map of sample (dummy) items, by ID.
@@ -45,9 +45,9 @@ public class DummyContent {
      * A dummy item representing a piece of content.
      */
     public static class DummyItem {
-        private String id;
+        private final String id;
         private String content;
-        private String longContent;
+        private final String longContent;
 
         public DummyItem(String id, String content, String longContent) {
             this.id = id;

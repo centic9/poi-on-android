@@ -12,15 +12,16 @@ import java.io.OutputStream;
 
 public class TestIssue84 {
     public static void saveExcelFile(OutputStream outputStream) throws IOException {
-        XMLSlideShow ppt = new XMLSlideShow();
-        XSLFSlide slide = ppt.createSlide();
-        XSLFTextBox shape = slide.createTextBox();
-        XSLFTextParagraph p = shape.addNewTextParagraph();
-        XSLFTextRun r1 = p.addNewTextRun();
-        r1.setText("The");
-        r1.setFontColor(Color.blue);
-        r1.setFontSize(24.0);
+        try (XMLSlideShow ppt = new XMLSlideShow()) {
+            XSLFSlide slide = ppt.createSlide();
+            XSLFTextBox shape = slide.createTextBox();
+            XSLFTextParagraph p = shape.addNewTextParagraph();
+            XSLFTextRun r1 = p.addNewTextRun();
+            r1.setText("The");
+            r1.setFontColor(Color.blue);
+            r1.setFontSize(24.0);
 
-        ppt.write(outputStream);
+            ppt.write(outputStream);
+        }
     }
 }
