@@ -280,6 +280,7 @@ public class MainActivity extends Activity {
 			StringBuilder text = new StringBuilder();
 			for (int resource : new int[] {
 					R.raw.simple,
+					R.raw.sample2,
 					R.raw.sample,
 					R.raw.lorem_ipsum,
 			} ) {
@@ -290,6 +291,15 @@ public class MainActivity extends Activity {
 				}
 			}
 			return "Issue 98 - Had text: " + text;
+		}));
+
+		// reproducer for https://github.com/centic9/poi-on-android/issues/103
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 103", () -> {
+			try (InputStream inputStream = getResources().openRawResource(R.raw.sample);
+				XMLSlideShow slideShow = new XMLSlideShow(inputStream)) {
+
+				return "Issue 103 - XMLSlideShow constructed successfully: " + slideShow.getSlides().size();
+			}
 		}));
 
 		try (InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum)) {
