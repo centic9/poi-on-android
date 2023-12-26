@@ -1,5 +1,8 @@
 package org.dstadler.poiandroidtest.poitest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.poi.ooxml.POIXMLDocumentPart;
 import org.dstadler.poiandroidtest.poitest.dummy.DummyContent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +14,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
  */
 @RunWith(AndroidJUnit4.class)
 public class ApplicationTest {
+    private static final Logger LOG = LogManager.getLogger(ApplicationTest.class);
+
     @Test
     public void test() {
         // just some very simple things to verify that testing works basically
