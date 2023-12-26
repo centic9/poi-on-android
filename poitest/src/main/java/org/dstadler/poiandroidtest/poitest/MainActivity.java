@@ -215,7 +215,7 @@ public class MainActivity extends Activity {
 		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Callable",
 				() -> "This is the result from the callable"));
 
-		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Signature Info - May crash",
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Signature Info",
 				() -> {
 					TestSignatureInfo test = new TestSignatureInfo();
 					test.testConstruct();
