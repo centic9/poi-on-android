@@ -10,4 +10,3 @@ pluginManagement {
 }
 
 include ':poitest'
-include ':poishadow'
