@@ -5,7 +5,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //implementation files('../poishadow/build/libs/poishadow-all.jar')
-    implementation 'org.apache.logging.log4j:log4j-core:2.22.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.22.1'
 
     // Testing-only dependencies
     androidTestImplementation 'androidx.test:core:1.5.0'
