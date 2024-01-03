@@ -7,12 +7,12 @@ This is a sample Android application to show how
 Apache POI can be used on Android.
 
 It consists of two projects:
-* poishadow: A small helper project to produce
+* __poishadow__: A small helper project to produce
   a shaded jar-file for Apache POI which includes
   all necessary dependencies and fixes a few things
   that usually hinder you deploying Apache POI on
   Android
-* poitest: A very small sample Android application
+* __poitest__: A very small sample Android application
   which performs some actions on XLSX-, PPTX and DOCX-files using
   Apache POI. See `MainActivity` for the actual
   code
@@ -37,7 +37,7 @@ older ones are likely not supported any more.
 ##### Dependencies
 
 Note: Some dependencies of Apache POI are not included in the shading to keep it's size at bay. If you use code
-areas which require commons-codec, commons-collections4 or any of the other dependencies, you may need to add
+areas which require `commons-codec`, `commons-collections4` or any of the other dependencies, you may need to add
 them in your Android application in addition to the poishadow-all.jar file dependency.
 
 ##### Missing java.awt classes
@@ -47,19 +47,21 @@ thus any code which uses code from there will not work. This affects various pla
 in Apache POI, e.g. when handling column-width, images or other graphical operations.
 
 A few classes have been re-implemented in the src-folder in project `poishadow`. If you
-are missing some you might be able to add re-implementations there.
+are missing some you might be able to add re-implementations for more there.
 
 ##### Use a pre-built jar
 
 If you want to get started quickly, there is a ready-made jar-file available in the 
-[release section](https://github.com/centic9/poi-on-android/releases). 
+[release section](https://github.com/centic9/poi-on-android/releases), however this is
+not updated frequently, so it may be somewhat outdated at times. 
 
 You should be able to simply add this to your Android project and use the Apache POI
 classes from it.
 
 ##### Build the jar yourself
 
-If you would like to change how the jar-file is built, e.g. if you need classes that
+If you would like to get the most recent jar or if you would like to change how the 
+jar-file is built,  e.g. if you need classes that
 are excluded, use a different version of POI or would like to adjust the build in some
 other way, you can build the shaded jar with the following steps:
 
@@ -85,7 +87,7 @@ Configure the version of the Android Build Tools that you have installed.
 
     vi poitest/build.gradle
 
-Then build the shadow-jar, for some reason this works better if executed separately:
+Then build the shadow-jar (for some reason this works better if executed separately):
 
     ./gradlew shadowJar
 
@@ -93,7 +95,7 @@ Finally run the build and some testing. Make sure you have a device connected, e
 
     ./gradlew build connectedCheck
 
-For only the jar-files run just `build`
+For only the jar-files just run `build`
 
 #### Support this project
 
@@ -133,6 +135,8 @@ Install the apk
   There are some libraries which provide these classes, but none
   was in a state that allowed it to easily integrate it here.
 
+PR which improve on these items are welcome.
+
 #### Links
 
 * https://github.com/FasterXML/aalto-xml
@@ -146,7 +150,7 @@ Install the apk
 
 #### Licensing
 
-   Copyright 2015-2022 Dominik Stadler
+   Copyright 2015-2024 Dominik Stadler
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
