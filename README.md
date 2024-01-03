@@ -37,7 +37,7 @@ older ones are likely not supported any more.
 ##### Dependencies
 
 Note: Some dependencies of Apache POI are not included in the shading to keep it's size at bay. If you use code
-areas which require `commons-codec`, `commons-collections4` or any of the other dependencies, you may need to add
+areas which require `curvesapi`, `commons-codec` or any of the other dependencies, you may need to add
 them in your Android application in addition to the poishadow-all.jar file dependency.
 
 ##### Missing java.awt classes
