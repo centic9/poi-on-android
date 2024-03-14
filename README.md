@@ -49,6 +49,9 @@ in Apache POI, e.g. when handling column-width, images or other graphical operat
 A few classes have been re-implemented in the src-folder in project `poishadow`. If you
 are missing some you might be able to add re-implementations for more there.
 
+We do not plan to fix all of these in this sample application, if you need more, feel
+free to add it and send PRs if you think it is generally useful.
+
 ##### Use a pre-built jar
 
 If you want to get started quickly, there is a ready-made jar-file available in the 
