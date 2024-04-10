@@ -37,6 +37,12 @@ shadowJar {
     exclude 'META-INF/NOTICE.txt'
     exclude 'META-INF/maven/**'
 
+    // these would cause warnings because the referenced classes are not available on Android
+    // because of this the System.setProperty() is needed as a workaround
+    exclude 'META-INF/services/javax.xml.stream.XMLEventFactory'
+    exclude 'META-INF/services/javax.xml.stream.XMLInputFactory'
+    exclude 'META-INF/services/javax.xml.stream.XMLOutputFactory'
+
     // these are only needed when handling Visio files, remove it if you would like to use Visio support
     dependencies {
         exclude(dependency('com.github.virtuald:curvesapi'))
