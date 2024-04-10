@@ -304,6 +304,26 @@ public class MainActivity extends Activity {
 			}
 		}));
 
+		try (InputStream slidesFile = getResources().openRawResource(R.raw.sample)) {
+			try (XMLSlideShow slides = new XMLSlideShow(slidesFile)) {
+				for (XSLFSlide slide : slides.getSlides()) {
+					DummyContent.addItem(new DummyItemWithCode("c" + (idCount++),
+							"Slide - " + slide.getSlideName(),
+							slide::getTitle));
+				}
+			}
+		}
+
+		try (InputStream slidesFile = getResources().openRawResource(R.raw.sample2)) {
+			try (HSLFSlideShow slides = new HSLFSlideShow(slidesFile)) {
+				for (HSLFSlide slide : slides.getSlides()) {
+					DummyContent.addItem(new DummyItemWithCode("c" + (idCount++),
+							"Slide - " + slide.getSlideName(),
+							slide::getTitle));
+				}
+			}
+		}
+
 		try (InputStream docFile = getResources().openRawResource(R.raw.lorem_ipsum)) {
 			XWPFDocument doc = new XWPFDocument(docFile);
 			try {
@@ -332,26 +352,6 @@ public class MainActivity extends Activity {
 						() -> "Called"));
 			} finally {
 				doc.close();
-			}
-		}
-
-		try (InputStream slidesFile = getResources().openRawResource(R.raw.sample)) {
-			try (XMLSlideShow slides = new XMLSlideShow(slidesFile)) {
-				for (XSLFSlide slide : slides.getSlides()) {
-					DummyContent.addItem(new DummyItemWithCode("c" + (idCount++),
-							"Slide - " + slide.getSlideName(),
-							slide::getTitle));
-				}
-			}
-		}
-
-		try (InputStream slidesFile = getResources().openRawResource(R.raw.sample2)) {
-			try (HSLFSlideShow slides = new HSLFSlideShow(slidesFile)) {
-				for (HSLFSlide slide : slides.getSlides()) {
-					DummyContent.addItem(new DummyItemWithCode("c" + (idCount++),
-							"Slide - " + slide.getSlideName(),
-							slide::getTitle));
-				}
 			}
 		}
 	}
