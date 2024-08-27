@@ -68,6 +68,8 @@ public class MainActivity extends Activity {
 		System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
 		System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
 
+		System.setProperty("org.apache.poi.ss.ignoreMissingFontSystem", "true");
+
 		try {
 			// create all the list items
 			setupContent();
@@ -269,7 +271,7 @@ public class MainActivity extends Activity {
 		}));
 
 		// reproducer for https://github.com/centic9/poi-on-android/issues/89
-		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 89 - Crashes!!", () -> {
+		DummyContent.addItem(new DummyItemWithCode("c" + (idCount++), "Test Issue 89", () -> {
 			try (OutputStream outputStream = openFileOutput("issue89.xlsx", Context.MODE_PRIVATE)) {
 				TestIssue89.saveExcelFile(outputStream);
 			}
