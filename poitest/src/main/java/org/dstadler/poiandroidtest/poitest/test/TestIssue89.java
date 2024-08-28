@@ -37,6 +37,11 @@ public class TestIssue89 {
 
             sheet.setPrintGridlines(true);
 
+            sheet = wb1.createSheet("Sheet2");
+            row1 = sheet.createRow(0);
+            cell = row1.createCell(0);
+            cell.setCellValue("cell-1");
+
             wb1.write(outputStream);
         } catch (Exception e) {
             throw new IllegalStateException(e);
