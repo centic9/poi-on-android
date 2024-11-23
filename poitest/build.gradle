@@ -10,7 +10,7 @@ dependencies {
     // for unit-tests copied from Apache POI source, 1.64 did not work!
     //implementation 'org.bouncycastle:bcpkix-jdk15on:1.59'
     // there is a unit-tests executed in normal code currently...
-    implementation 'org.junit.vintage:junit-vintage-engine:5.11.0'
+    implementation 'org.junit.vintage:junit-vintage-engine:5.11.3'
 
     // newer versions of xmlsec are compiled with JDK 8 which does not work in Android Studio 2.x!
     /*implementation ('org.apache.santuario:xmlsec:2.2.1') {
