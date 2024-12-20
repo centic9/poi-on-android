@@ -87,4 +87,7 @@ android {
         abortOnError false
     }
     namespace 'org.dstadler.poiandroidtest.poitest'
+    buildFeatures {
+        buildConfig true
+    }
 }
