@@ -7,8 +7,9 @@ dependencies {
     // commons-text 1.8 fails due to Java 8 dependency
     implementation 'org.apache.commons:commons-text:1.13.0'
     implementation 'org.apache.commons:commons-lang3:3.17.0'
+
     // there is a unit-tests executed in normal code currently...
-    implementation 'org.junit.vintage:junit-vintage-engine:5.11.3'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
 
     // newer versions of xmlsec are compiled with JDK 8 which does not work in Android Studio 2.x!
     /*implementation ('org.apache.santuario:xmlsec:2.2.1') {

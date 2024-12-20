@@ -2,7 +2,7 @@ package org.apache.poi.poifs.crypt;
 
 import org.apache.poi.poifs.crypt.dsig.SignatureInfo;
 
-import static junit.framework.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestSignatureInfo {
     public void testConstruct()  {
