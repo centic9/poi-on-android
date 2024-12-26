@@ -3,9 +3,6 @@ pluginManagement {
         repositories {
             google()
         }
-        dependencies {
-            classpath("com.android.tools:r8:8.5.35")
-        }
     }
 }
 
