@@ -5,11 +5,11 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     // commons-text 1.8 fails due to Java 8 dependency
-    implementation 'org.apache.commons:commons-text:1.13.0'
+    implementation 'org.apache.commons:commons-text:1.13.1'
     implementation 'org.apache.commons:commons-lang3:3.17.0'
 
     // there is a unit-tests executed in normal code currently...
-    implementation 'org.junit.jupiter:junit-jupiter-api:5.12.2'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.13.1'
 
     // newer versions of xmlsec are compiled with JDK 8 which does not work in Android Studio 2.x!
     /*implementation ('org.apache.santuario:xmlsec:2.2.1') {
