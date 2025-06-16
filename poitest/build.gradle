@@ -34,9 +34,9 @@ android {
     compileSdkVersion 34
 
     compileOptions {
-        coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        coreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     defaultConfig {
@@ -47,20 +47,20 @@ android {
         versionName '5.4.1'
 
         // Enabling multidex support.
-        multiDexEnabled true
+        multiDexEnabled = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            shrinkResources true
-            minifyEnabled true
+            shrinkResources = true
+            minifyEnabled = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             // For the purposes of the sample, allow testing of a proguarded release build
             // using the debug key
-            signingConfig signingConfigs.debug
+            signingConfig = signingConfigs.debug
         }
     }
     packagingOptions {
@@ -84,10 +84,10 @@ android {
 
     // error about duplicates if some of these are not excluded
     lint {
-        abortOnError false
+        abortOnError = false
     }
-    namespace 'org.dstadler.poiandroidtest.poitest'
+    namespace = 'org.dstadler.poiandroidtest.poitest'
     buildFeatures {
-        buildConfig true
+        buildConfig = true
     }
 }
