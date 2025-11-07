@@ -12,7 +12,7 @@ allprojects {
     repositories {
         mavenCentral()
         google()
-        // for testing upcoming POI releases: maven { url "https://repository.apache.org/content/groups/staging/" }
+        // for testing upcoming POI releases: maven { url = "https://repository.apache.org/content/groups/staging/" }
     }
 }
 
