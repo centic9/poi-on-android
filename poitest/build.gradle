@@ -6,7 +6,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     // commons-text 1.8 fails due to Java 8 dependency
     implementation 'org.apache.commons:commons-text:1.14.0'
-    implementation 'org.apache.commons:commons-lang3:3.19.0'
+    implementation 'org.apache.commons:commons-lang3:3.20.0'
 
     // there is a unit-tests executed in normal code currently...
     implementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
