@@ -153,7 +153,7 @@ PR which improve on these items are welcome.
 
 #### Licensing
 
-   Copyright 2015-2024 Dominik Stadler
+   Copyright 2015-2026 Dominik Stadler
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
